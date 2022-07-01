@@ -11,10 +11,10 @@
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "hybrid-navigation": "^2.9.0",
     "react": "17.0.2",
     "react-native": "^0.67.4",
-    "react-native-fast-image": "^8.1.5",
-    "hybrid-navigation": "^2.9.0"
+    "react-native-fast-image": "^8.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -25,11 +25,15 @@
     "@types/react-native": "^0.66.0",
     "@types/react-test-renderer": "17.0.1",
     "babel-jest": "^27.0.6",
+    "babel-plugin-react-native-classname-to-style": "^1.2.2",
+    "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
     "eslint": "^7.32.0",
     "jest": "^27.0.6",
     "metro-react-native-babel-preset": "^0.66.2",
+    "react-native-sass-transformer": "^2.0.0",
     "react-native-testing-library": "^6.0.0",
     "react-test-renderer": "17.0.2",
+    "sass": "^1.53.0",
     "typescript": "^4.3.5"
   },
   "jest": {

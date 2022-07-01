@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 import { withNavigationItem } from 'hybrid-navigation'
+import scss from './App.scss'
 
 interface Props {
   name: string
 }
 
 function Welcome(props: Props) {
-  return <Text style={styles.text}>Hello {props.name}!</Text>
+  return <Text style={[scss.welcome, styles.text]}>Hello {props.name}!</Text>
 }
 
 function App() {
@@ -43,9 +44,6 @@ const styles = StyleSheet.create({
   },
   text: {
     backgroundColor: 'transparent',
-    fontSize: 17,
-    fontFamily: 'DFWaWaSC-W5',
-    textAlign: 'center',
     margin: 8,
   },
   input: {
