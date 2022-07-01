@@ -12,6 +12,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		91459E512605ACD000EFBE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91459E502605ACD000EFBE6E /* Assets.xcassets */; };
 		91459E552605ACE600EFBE6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91459E532605ACE600EFBE6E /* LaunchScreen.storyboard */; };
+		C21D7DD986E64385A9E829C4 /* DFWaWaSC-W5.otf in Resources */ = {isa = PBXBuildFile; fileRef = 517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		91459E542605ACE600EFBE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = RnDemo/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E122DC6660A2FD7515F28ED7 /* libPods-RnDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RnDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */ = {isa = PBXFileReference; name = "DFWaWaSC-W5.otf"; path = "../assets/fonts/DFWaWaSC-W5.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				244BF2D3CD7C5A603856DFAB /* Pods */,
+				5C1946BA093845CFB9DF2BD8 /* Resources */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -99,6 +102,15 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		5C1946BA093845CFB9DF2BD8 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -161,6 +173,7 @@
 			files = (
 				91459E512605ACD000EFBE6E /* Assets.xcassets in Resources */,
 				91459E552605ACE600EFBE6E /* LaunchScreen.storyboard in Resources */,
+				C21D7DD986E64385A9E829C4 /* DFWaWaSC-W5.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

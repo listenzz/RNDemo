@@ -11,7 +11,7 @@ function Welcome(props: Props) {
 }
 
 function App() {
-  const [name, setName] = useState('Sara')
+  const [name, setName] = useState('娃娃')
   const [text, setText] = useState('')
   return (
     <View style={styles.container}>
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   text: {
     backgroundColor: 'transparent',
     fontSize: 17,
+    fontFamily: 'DFWaWaSC-W5',
     textAlign: 'center',
     margin: 8,
   },
