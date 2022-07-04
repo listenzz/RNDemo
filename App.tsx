@@ -29,7 +29,7 @@ export default withNavigationItem({
   },
   rightBarButtonItem: {
     title: 'push',
-    action: navigator => navigator.push('App'),
+    action: navigator => navigator.push('LayoutAndState'),
   },
 })(App)
 

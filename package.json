@@ -11,6 +11,7 @@
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/hooks": "^2.8.1",
     "hybrid-navigation": "^2.9.0",
     "react": "17.0.2",
     "react-native": "^0.67.4",
@@ -19,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/runtime": "^7.16.0",
-    "@react-native-community/eslint-config": "^3.0.0",
+    "@gfez/eslint-config-react-native": "^1.5.1",
     "@types/jest": "^27.0.1",
     "@types/react": "^17.0.15",
     "@types/react-native": "^0.66.0",
@@ -27,7 +28,6 @@
     "babel-jest": "^27.0.6",
     "babel-plugin-react-native-classname-to-style": "^1.2.2",
     "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
-    "eslint": "^7.32.0",
     "jest": "^27.0.6",
     "metro-react-native-babel-preset": "^0.66.2",
     "react-native-sass-transformer": "^2.0.0",
