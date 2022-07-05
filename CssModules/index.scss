@@ -1,0 +1,33 @@
+@import './theme/font.scss';
+@import './theme/layout';
+
+.welcome {
+  font-family: $primary-font;
+  font-size: 17px;
+  text-align: center;
+}
+
+.container {
+  @include screen;
+  padding: 16px 32px;
+}
+
+.input {
+  font-size: 14px;
+  font-family: $primary-font;
+  line-height: 24px;
+  padding: 4px 12px;
+  margin: 16px 0px;
+  height: 80px;
+  border: 1px solid #cccccc;
+}
+
+.button {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.button-disabled {
+  @extend .button;
+  background-color: #dddddd;
+}

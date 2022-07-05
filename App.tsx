@@ -1,58 +1,70 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
-import { withNavigationItem } from 'hybrid-navigation'
-import scss from './App.scss'
+import React from 'react'
+import { StyleSheet, FlatList, ListRenderItem, Text, TouchableOpacity, Image } from 'react-native'
+import { useNavigator, withNavigationItem } from 'hybrid-navigation'
 
-interface Props {
-  name: string
+interface Item {
+  title: string
+  routeName: string
 }
 
-function Welcome(props: Props) {
-  return <Text style={[scss.welcome, styles.text]}>Hello {props.name}!</Text>
-}
+const data: Array<Item> = [
+  {
+    title: '自定义字体',
+    routeName: 'CustomFont',
+  },
+  {
+    title: 'CSS Modules',
+    routeName: 'CssModules',
+  },
+  {
+    title: '分离布局组件和状态组件',
+    routeName: 'LayoutAndState',
+  },
+]
 
 function App() {
-  const [name, setName] = useState('娃娃')
-  const [text, setText] = useState('')
+  const navigator = useNavigator()
+
+  const renderListItem: ListRenderItem<Item> = ({ item }) => {
+    return <ListItem {...item} onPress={() => navigator.push(item.routeName)} />
+  }
+
+  return <FlatList data={data} keyExtractor={item => item.title} renderItem={renderListItem} />
+}
+
+interface ListItemProps {
+  title: string
+  onPress?: () => void
+}
+
+function ListItem({ title, onPress }: ListItemProps) {
   return (
-    <View style={styles.container}>
-      <Welcome name={name} />
-      <TextInput value={text} onChangeText={setText} style={styles.input} />
-      <Button title="确定" onPress={() => setName(text)} />
-    </View>
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
+      <Image source={require('./assets/indicator.png')} />
+    </TouchableOpacity>
   )
 }
 
 export default withNavigationItem({
   titleItem: {
-    title: 'RnDemo',
-  },
-  rightBarButtonItem: {
-    title: 'push',
-    action: navigator => navigator.push('LayoutAndState'),
+    title: 'RNDemo',
   },
 })(App)
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    paddingTop: 16,
-    paddingLeft: 32,
-    paddingRight: 32,
+  item: {
+    height: 60,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEEEEE',
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   text: {
-    backgroundColor: 'transparent',
-    margin: 8,
-  },
-  input: {
-    height: 40,
-    marginTop: 16,
-    marginBottom: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderColor: '#cccccc',
-    borderWidth: 1,
+    color: '#222222',
+    fontSize: 17,
   },
 })
