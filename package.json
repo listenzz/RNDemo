@@ -23,7 +23,8 @@
     "react-native-fast-image": "^8.1.5",
     "react-native-shadow-2": "^6.0.5",
     "react-native-svg": "^12.3.0",
-    "react-native-system-setting": "^1.7.6"
+    "react-native-system-setting": "^1.7.6",
+    "react-native-pager-view": "^5.4.25"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

@@ -5788,6 +5788,11 @@ react-native-fast-image@^8.1.5:
   resolved "https://registry.npmmirror.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
+react-native-pager-view@^5.4.25:
+  version "5.4.25"
+  resolved "https://registry.npmmirror.com/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz#cd639d5387a7f3d5581b55a33c5faa1cbc200f97"
+  integrity sha512-3drrYwaLat2fYszymZe3nHMPASJ4aJMaxiejfA1V5SK3OygYmdtmV2u5prX7TnjueJzGSyyaCYEr2JlrRt4YPg==
+
 react-native-sass-transformer@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/react-native-sass-transformer/-/react-native-sass-transformer-2.0.0.tgz#a4565eaee0234749638a87ec272b61a42f5b2232"

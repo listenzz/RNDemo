@@ -36,6 +36,10 @@ const data: Array<Item> = [
     title: '倒计时',
     routeName: 'Countdown',
   },
+  {
+    title: '为 PagerView 自定义 TabBar',
+    routeName: 'TabBar',
+  },
 ]
 
 function App() {
