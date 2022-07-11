@@ -13,7 +13,9 @@ export default function CheckLabel({ item, style, checkedStyle }: CheckLabelProp
 
   return (
     <Pressable onPress={onPress}>
-      <Text style={[styles.label, style, checked ? [styles.checked, checkedStyle] : undefined]}>{item.label}</Text>
+      <Text style={[styles.label, style, checked ? [styles.checked, checkedStyle] : undefined]}>
+        {item.label}
+      </Text>
     </Pressable>
   )
 }

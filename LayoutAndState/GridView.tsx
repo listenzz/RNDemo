@@ -30,7 +30,10 @@ export default function GridView({
             {
               width: itemWidth,
               marginLeft: index % numOfRow !== 0 ? spacing : 0,
-              marginBottom: Math.floor(index / numOfRow) < Math.floor((count - 1) / numOfRow) ? verticalSpacing : 0,
+              marginBottom:
+                Math.floor(index / numOfRow) < Math.floor((count - 1) / numOfRow)
+                  ? verticalSpacing
+                  : 0,
             },
           ],
         })
