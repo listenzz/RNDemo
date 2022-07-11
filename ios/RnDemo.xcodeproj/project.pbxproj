@@ -23,11 +23,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RnDemo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RnDemo/main.m; sourceTree = "<group>"; };
 		514699031AF404FCBE8E8782 /* Pods-RnDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RnDemo.debug.xcconfig"; path = "Target Support Files/Pods-RnDemo/Pods-RnDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DFWaWaSC-W5.otf"; path = "../assets/fonts/DFWaWaSC-W5.otf"; sourceTree = "<group>"; };
 		91459E502605ACD000EFBE6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = RnDemo/Assets.xcassets; sourceTree = "<group>"; };
 		91459E542605ACE600EFBE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = RnDemo/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E122DC6660A2FD7515F28ED7 /* libPods-RnDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RnDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */ = {isa = PBXFileReference; name = "DFWaWaSC-W5.otf"; path = "../assets/fonts/DFWaWaSC-W5.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +73,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5C1946BA093845CFB9DF2BD8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,15 +111,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		5C1946BA093845CFB9DF2BD8 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				517EC4E3FF074454895ABF88 /* DFWaWaSC-W5.otf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
