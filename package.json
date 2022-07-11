@@ -8,14 +8,18 @@
     "start": "react-native start --reset-cache",
     "test": "jest",
     "tsc": "tsc --noEmit",
-    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-community/hooks": "^2.8.1",
     "hybrid-navigation": "^2.9.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "react": "17.0.2",
     "react-native": "^0.67.4",
-    "react-native-fast-image": "^8.1.5"
+    "react-native-fast-image": "^8.1.5",
+    "react-native-system-setting": "^1.7.6"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

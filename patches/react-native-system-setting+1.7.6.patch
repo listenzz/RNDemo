@@ -1,0 +1,21 @@
+diff --git a/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java b/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
+index dedd524..5f260d6 100644
+--- a/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
++++ b/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
+@@ -203,6 +203,16 @@ public class SystemSetting extends ReactContextBaseJavaModule implements Activit
+         return SystemSetting.class.getSimpleName();
+     }
+ 
++    @ReactMethod
++    public void addListener(String eventType) {
++        // do nothing
++    }
++
++    @ReactMethod
++    public void removeListeners(int count) {
++        // do nothing
++    }
++
+     @ReactMethod
+     public void setScreenMode(int mode, Promise promise) {
+         mode = mode == Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ? mode : Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
