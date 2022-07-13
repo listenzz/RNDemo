@@ -20,6 +20,10 @@ const data: Array<Item> = [
     title: '分离布局组件和状态组件',
     routeName: 'LayoutAndState',
   },
+  {
+    title: '阴影盒子',
+    routeName: 'ShadowBox',
+  },
 ]
 
 function App() {

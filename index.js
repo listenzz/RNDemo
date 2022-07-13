@@ -4,6 +4,7 @@ import App from './App'
 import CustomFont from './CustomFont'
 import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
+import ShadowBox from './ShadowBox'
 
 // 配置全局样式
 Garden.setStyle({
@@ -20,6 +21,7 @@ ReactRegistry.registerComponent('App', () => App)
 ReactRegistry.registerComponent('CustomFont', () => CustomFont)
 ReactRegistry.registerComponent('CssModules', () => CssModules)
 ReactRegistry.registerComponent('LayoutAndState', () => LayoutAndState)
+ReactRegistry.registerComponent('ShadowBox', () => ShadowBox)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()
