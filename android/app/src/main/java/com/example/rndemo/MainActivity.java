@@ -15,13 +15,14 @@ public class MainActivity extends ReactAppCompatActivity {
         // 更改主题为 AppTheme，因为在 AndroidManifest.xml 中将主题设置成了 SplashTheme
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        // 显示 SplashFragment 来作为加载阶段的闪屏
         launchSplash(savedInstanceState);
     }
 
     @Override
     protected void setActivityRootFragmentSync(AwesomeFragment fragment, int tag) {
         super.setActivityRootFragmentSync(fragment, tag);
-        // 此时 App UI 层级已经构建好，隐藏闪屏
+        // 此时 React Native 已经启动完成，App UI 层级已经构建好
         hideSplash();
     }
 
@@ -35,7 +36,8 @@ public class MainActivity extends ReactAppCompatActivity {
             }
         }
 
-        // 当 Activity 销毁后重建，譬如旋转屏幕的时候，如果 React Native 已经启动完成，则不再显示闪屏
+        // 当 Activity 销毁后重建，譬如旋转屏幕的时候，
+        // 如果 React Native 已经启动完成，则不再显示闪屏
         ReactContext reactContext = getCurrentReactContext();
         if (splashFragment == null && reactContext == null) {
             splashFragment = new SplashFragment();
@@ -47,9 +49,9 @@ public class MainActivity extends ReactAppCompatActivity {
         if (splashFragment == null) {
             return;
         }
-        // React Native 已经启动完成，UI 层级也已经构建好
-        // 但主页比较重的话可能需要点时间来执行（网络请求）等等
-        // 如果发现有白屏，请调整 delayInMs 参数
+
+        // 虽然 React Native 已经启动完成，UI 层级也已经构建好，
+        // 但主界面可能还没完成渲染，如果发现有白屏，请调整 delayInMs 参数
         UiThreadUtil.runOnUiThread(() -> {
             if (splashFragment != null) {
                 splashFragment.hideAsDialog();

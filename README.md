@@ -9,4 +9,3 @@
 - [如何给第三方库打补丁](https://todoit.tech/patch-package.html)
 - [如何制作和配置 App 启动图标](https://todoit.tech/launcher-icon.html)
 - [如何实现基于原生方案的闪屏](https://todoit.tech/splash-screen.html)
-- [那些你在画 UI 时需要知道的技巧](https://todoit.tech/ui-tips.html)
