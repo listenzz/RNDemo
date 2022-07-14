@@ -1,17 +1,23 @@
 import React from 'react'
 import { Platform, Text } from 'react-native'
 
+const defaultFontFamily = {
+  ...Platform.select({
+    android: { fontFamily: '' },
+  }),
+}
+
 // @ts-ignore
-const oldTextRender: any = Text.render
+const __render: any = Text.render
 
 // @ts-ignore
 Text.render = function (...args: any) {
-  const element: JSX.Element = oldTextRender.call(this, ...args)
+  const element: React.ReactElement = __render.call(this, ...args)
 
   return React.cloneElement(
     element,
-    {},
-    React.Children.map(element.props.children, function (child: JSX.Element) {
+    { style: [defaultFontFamily, element.props.style] },
+    React.Children.map(element.props.children, function (child: React.ReactElement) {
       if (child.type === 'RCTText') {
         return hook(child)
       }
@@ -20,13 +26,7 @@ Text.render = function (...args: any) {
   )
 }
 
-function hook(element: JSX.Element) {
-  const defaultFontFamily = {
-    ...Platform.select({
-      android: { fontFamily: '' },
-    }),
-  }
-
+function hook(element: React.ReactElement) {
   return React.cloneElement(element, {
     style: [defaultFontFamily, element.props.style],
   })

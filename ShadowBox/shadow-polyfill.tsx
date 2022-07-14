@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, View, StyleSheet } from 'react-native'
+import { Platform, View, StyleSheet, ViewStyle } from 'react-native'
 import DropShadow from 'react-native-drop-shadow'
 
 // @ts-ignore
@@ -7,7 +7,7 @@ const __render: any = View.render
 
 // @ts-ignore
 View.render = function (...args: any) {
-  const element: JSX.Element = __render.call(this, ...args)
+  const element: React.ReactElement = __render.call(this, ...args)
   if (Platform.OS === 'ios') {
     return element
   }
@@ -15,7 +15,7 @@ View.render = function (...args: any) {
   return React.cloneElement(
     element,
     {},
-    React.Children.map(element.props.children, (child: JSX.Element) => {
+    React.Children.map(element.props.children, (child: React.ReactElement) => {
       if (child.type === 'RCTView') {
         return hook(child)
       }
@@ -24,7 +24,7 @@ View.render = function (...args: any) {
   )
 }
 
-function hook(element: JSX.Element) {
+function hook(element: React.ReactElement) {
   const style = StyleSheet.flatten(element.props.style) || {}
   const keys = Object.keys(style)
 
@@ -32,18 +32,7 @@ function hook(element: JSX.Element) {
     return element
   }
 
-  if (React.Children.count(element.props.children) === 0) {
-    return element
-  }
-
   delete style.elevation
-
-  if (React.Children.count(element.props.children) === 1) {
-    const { children, ...props } = element.props
-    delete props.style
-    return React.createElement(DropShadow, { ...props, style }, children)
-  }
-
   const { outer, inner } = splitShadowProps(style)
   const props = element.props
   delete props.style
@@ -58,15 +47,14 @@ function hook(element: JSX.Element) {
   )
 }
 
-function splitShadowProps(props: any) {
-  let outer: any = null
-  let inner: any = null
+type StyleKey = keyof ViewStyle
 
-  if (props != null) {
-    outer = {}
-    inner = {}
+function splitShadowProps(style: ViewStyle) {
+  let outer: { [key: string]: any } = {}
+  let inner: { [key: string]: any } = {}
 
-    for (const prop of Object.keys(props)) {
+  if (style != null) {
+    for (const prop of Object.keys(style) as StyleKey[]) {
       switch (prop) {
         case 'margin':
         case 'marginHorizontal':
@@ -84,10 +72,10 @@ function splitShadowProps(props: any) {
         case 'shadowOffset':
         case 'shadowOpacity':
         case 'shadowRadius':
-          outer[prop] = props[prop]
+          outer[prop] = style[prop]
           break
         default:
-          inner[prop] = props[prop]
+          inner[prop] = style[prop]
           break
       }
     }
