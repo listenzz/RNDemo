@@ -9,3 +9,5 @@
 - [如何给第三方库打补丁](https://todoit.tech/patch-package.html)
 - [如何制作和配置 App 启动图标](https://todoit.tech/launcher-icon.html)
 - [如何实现基于原生方案的闪屏](https://todoit.tech/splash-screen.html)
+- [如何实现 shadow-box](https://todoit.tech/shadow-box.html)
+- [如何处理部分 Android 手机文字显示不全的问题](https://todoit.tech/incomplete-text.html)
