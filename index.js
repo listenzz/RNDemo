@@ -6,6 +6,9 @@ import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
 import ShadowBox from './ShadowBox'
 
+import './IncompleteText/text-polyfill'
+import IncompleteText from './IncompleteText'
+
 // 配置全局样式
 Garden.setStyle({
   topBarStyle: 'dark-content',
@@ -22,6 +25,7 @@ ReactRegistry.registerComponent('CustomFont', () => CustomFont)
 ReactRegistry.registerComponent('CssModules', () => CssModules)
 ReactRegistry.registerComponent('LayoutAndState', () => LayoutAndState)
 ReactRegistry.registerComponent('ShadowBox', () => ShadowBox)
+ReactRegistry.registerComponent('IncompleteText', () => IncompleteText)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()

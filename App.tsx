@@ -24,6 +24,10 @@ const data: Array<Item> = [
     title: '阴影盒子',
     routeName: 'ShadowBox',
   },
+  {
+    title: '处理文字显示不全的问题',
+    routeName: 'IncompleteText',
+  },
 ]
 
 function App() {
