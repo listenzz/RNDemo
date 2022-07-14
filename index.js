@@ -4,6 +4,8 @@ import App from './App'
 import CustomFont from './CustomFont'
 import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
+
+import './ShadowBox/shadow-polyfill'
 import ShadowBox from './ShadowBox'
 
 import './IncompleteText/text-polyfill'

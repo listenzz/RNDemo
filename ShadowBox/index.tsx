@@ -1,20 +1,22 @@
 import React from 'react'
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { withNavigationItem } from 'hybrid-navigation'
-import DropShadow from 'react-native-drop-shadow'
 import { Shadow } from 'react-native-shadow-2'
 
 function ShadowBox() {
   return (
-    <View style={styles.container}>
-      <DropShadow style={styles.boxShadow}>
-        <View style={styles.card}>
-          <View>
-            <Text style={styles.heading}>React Native cross-platform box shadow</Text>
-          </View>
-          <Text>Using the Platform API to conditionally render box shadow</Text>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={[styles.boxShadow, styles.card]}>
+        <View>
+          <Text style={styles.heading}>React Native cross-platform box shadow</Text>
         </View>
-      </DropShadow>
+        <Text>Using the Platform API to conditionally render box shadow</Text>
+        <View style={styles.shadowProp}>
+          <Pressable style={styles.button} onPress={() => console.log('pressed')}>
+            <Text style={(styles.text, styles.buttonText)}>See more</Text>
+          </Pressable>
+        </View>
+      </View>
 
       <Shadow
         startColor={'#2222223d'}
@@ -22,13 +24,13 @@ function ShadowBox() {
         distance={4}
         radius={8}
         containerViewStyle={{ marginHorizontal: 36 }}
-        viewStyle={styles.card}>
+        viewStyle={[styles.card, { width: '100%' }]}>
         <View>
           <Text style={styles.heading}>React Native cross-platform box shadow</Text>
         </View>
         <Text>Using the Platform API to conditionally render box shadow</Text>
       </Shadow>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -52,7 +54,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 45,
     paddingHorizontal: 25,
-    width: '100%',
     borderRadius: 8,
   },
   boxShadow: {
