@@ -25,7 +25,7 @@ const data: Array<Item> = [
     routeName: 'ShadowBox',
   },
   {
-    title: '处理文字显示不全的问题',
+    title: '处理 Android 手机吞字问题',
     routeName: 'IncompleteText',
   },
 ]

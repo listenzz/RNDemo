@@ -12,12 +12,16 @@ View.render = function (...args: any) {
     return element
   }
 
-  return React.Children.map(element.props.children, (child: JSX.Element) => {
-    if (child.type === 'RCTView') {
-      return hook(child)
-    }
-    return child
-  })
+  return React.cloneElement(
+    element,
+    {},
+    React.Children.map(element.props.children, (child: JSX.Element) => {
+      if (child.type === 'RCTView') {
+        return hook(child)
+      }
+      return child
+    }),
+  )
 }
 
 function hook(element: JSX.Element) {
