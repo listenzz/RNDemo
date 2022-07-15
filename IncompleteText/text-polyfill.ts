@@ -17,7 +17,7 @@ Text.render = function (...args: any) {
   return React.cloneElement(
     element,
     { style: [defaultFontFamily, element.props.style] },
-    React.Children.map(element.props.children, function (child: React.ReactElement) {
+    React.Children.map(element.props.children, (child: React.ReactElement) => {
       if (child.type === 'RCTText') {
         return hook(child)
       }

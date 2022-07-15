@@ -28,6 +28,14 @@ const data: Array<Item> = [
     title: '处理 Android 手机吞字问题',
     routeName: 'IncompleteText',
   },
+  {
+    title: '确认码',
+    routeName: 'ConfirmationView',
+  },
+  {
+    title: '倒计时',
+    routeName: 'Countdown',
+  },
 ]
 
 function App() {
