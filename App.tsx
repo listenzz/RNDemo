@@ -30,7 +30,7 @@ const data: Array<Item> = [
   },
   {
     title: '确认码',
-    routeName: 'ConfirmationView',
+    routeName: 'Confirmation',
   },
   {
     title: '倒计时',

@@ -11,7 +11,7 @@ import ShadowBox from './ShadowBox'
 import './IncompleteText/text-polyfill'
 import IncompleteText from './IncompleteText'
 
-import ConfirmationView from './ConfirmationView'
+import Confirmation from './Confirmation'
 import Countdown from './Countdown'
 
 // 配置全局样式
@@ -31,7 +31,7 @@ ReactRegistry.registerComponent('CssModules', () => CssModules)
 ReactRegistry.registerComponent('LayoutAndState', () => LayoutAndState)
 ReactRegistry.registerComponent('ShadowBox', () => ShadowBox)
 ReactRegistry.registerComponent('IncompleteText', () => IncompleteText)
-ReactRegistry.registerComponent('ConfirmationView', () => ConfirmationView)
+ReactRegistry.registerComponent('Confirmation', () => Confirmation)
 ReactRegistry.registerComponent('Countdown', () => Countdown)
 
 // 重要必须
