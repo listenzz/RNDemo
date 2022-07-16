@@ -11,3 +11,5 @@
 - [如何实现基于原生方案的闪屏](https://todoit.tech/splash-screen.html)
 - [如何实现 shadow-box](https://todoit.tech/shadow-box.html)
 - [如何处理 Android 手机吞字问题](https://todoit.tech/incomplete-text.html)
+- [如何实现高鲁棒性的倒计时](https://todoit.tech/countdown.html)
+- [如何实现确认码控件](https://todoit.tech/confirmation-code.html)
