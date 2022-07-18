@@ -49,17 +49,22 @@ export default function TabBar({
   const handleTabLayout = useCallback(
     (index: number, layout: Layout) => {
       layouts[index] = layout
-      const frames = layouts.filter(layout => layout.width > 0)
 
-      if (frames.length !== tabs.length) {
+      const length = layouts.filter(layout => layout.width > 0).length
+      if (length !== tabs.length) {
         return
       }
 
       const range: number[] = []
-      for (let index = 0; index < frames.length; index++) {
-        const { x, width } = frames[index]
-        range.push(x + width / 2 - indicatorWidth / 2)
+      for (let index = 0; index < length; index++) {
+        const { x, width } = layouts[index]
+        // 我们希望指示器和所选 Tab 垂直居中对齐
+        // 那么指示器的 x 轴偏移量就是 Tab 的 center.x - 指示器的 center.x
+        const tabCenterX = x + width / 2
+        const indicatorCenterX = indicatorWidth / 2
+        range.push(tabCenterX - indicatorCenterX)
       }
+
       console.log('---------------onTabLayout-------------------')
       setOutputRange(range)
       onTabsLayout?.(layouts)

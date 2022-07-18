@@ -35,9 +35,9 @@ export default function ScrollBar({ style, page, children, ...props }: ScrollBar
       return
     }
 
-    // 获得当前页面的 tab 布局数据
+    // 获得选中的 Tab 布局数据
     const tabLayout = tabLayouts[page]
-    // 计算 tab 中心到 scrollbar 中心的距离
+    // 计算 Tab 中心到 ScrollBar 中心的 x 轴距离
     const dx = tabLayout.x + tabLayout.width / 2 - scrollBarWidth / 2
     // 计算出 ScrollView 的最大可滚动距离，ScrollView 的可滚动范围是 [0, maxScrollX]
     const maxScrollX = contentWidth - scrollBarWidth
