@@ -38,7 +38,7 @@ const data: Array<Item> = [
   },
   {
     title: '为 PagerView 自定义 TabBar',
-    routeName: 'TabBar',
+    routeName: 'TabBarDemo',
   },
 ]
 

@@ -4,7 +4,7 @@ import App from './App'
 import CustomFont from './CustomFont'
 import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
-import TabBar from './TabBar'
+import TabBarDemo from './TabBarDemo'
 
 import './ShadowBox/shadow-polyfill'
 import ShadowBox from './ShadowBox'
@@ -34,7 +34,7 @@ ReactRegistry.registerComponent('ShadowBox', () => ShadowBox)
 ReactRegistry.registerComponent('IncompleteText', () => IncompleteText)
 ReactRegistry.registerComponent('Confirmation', () => Confirmation)
 ReactRegistry.registerComponent('Countdown', () => Countdown)
-ReactRegistry.registerComponent('TabBar', () => TabBar)
+ReactRegistry.registerComponent('TabBarDemo', () => TabBarDemo)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()

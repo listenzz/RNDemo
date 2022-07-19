@@ -43,7 +43,7 @@ export default function ScrollBar({ style, page, children, ...props }: ScrollBar
     const maxScrollX = contentWidth - scrollBarWidth
     // 计算出 ScrollView 应该滚动到的 x 坐标，它必须大于等于 0 并且小于等于 maxScrollX
     const x = Math.min(Math.max(0, dx), maxScrollX)
-    scrollRef.current?.scrollTo({ x: x })
+    scrollRef.current?.scrollTo({ x })
   }, [page, tabLayouts, contentWidth, scrollBarWidth])
 
   return (
