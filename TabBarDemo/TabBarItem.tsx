@@ -14,7 +14,9 @@ interface TabBarItemProps {
   onPress?: () => void
   onLayout: ViewProps['onLayout']
   style?: StyleProp<ViewStyle>
-  labelStyle?: StyleProp<TextStyle> | Animated.WithAnimatedObject<any>
+  labelStyle?:
+    | Animated.WithAnimatedObject<TextStyle>
+    | Animated.WithAnimatedArray<StyleProp<TextStyle>>
 }
 
 export default function TabBarItem({
