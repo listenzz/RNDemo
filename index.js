@@ -14,6 +14,8 @@ import IncompleteText from './IncompleteText'
 
 import Confirmation from './Confirmation'
 import Countdown from './Countdown'
+import Misc from './Misc'
+import './Misc/image-polyfill'
 
 // 配置全局样式
 Garden.setStyle({
@@ -35,6 +37,7 @@ ReactRegistry.registerComponent('IncompleteText', () => IncompleteText)
 ReactRegistry.registerComponent('Confirmation', () => Confirmation)
 ReactRegistry.registerComponent('Countdown', () => Countdown)
 ReactRegistry.registerComponent('TabBarDemo', () => TabBarDemo)
+ReactRegistry.registerComponent('Misc', () => Misc)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()

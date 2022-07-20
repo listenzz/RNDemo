@@ -26,11 +26,11 @@ module.exports = {
           "ImportDeclaration[source.value='react-native'] > ImportSpecifier[imported.name=/Touchable\\w*/]",
         message: 'Use Pressable instead',
       },
-      {
-        selector:
-          "ImportDeclaration[source.value='react-native'] > ImportSpecifier[imported.name='Image']",
-        message: 'Use FastImage from react-native-fast-image instead',
-      },
+      // {
+      //   selector:
+      //     "ImportDeclaration[source.value='react-native'] > ImportSpecifier[imported.name='Image']",
+      //   message: 'Use FastImage from react-native-fast-image instead',
+      // },
     ],
   },
 }

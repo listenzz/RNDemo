@@ -40,6 +40,10 @@ const data: Array<Item> = [
     title: '为 PagerView 自定义 TabBar',
     routeName: 'TabBarDemo',
   },
+  {
+    title: '杂七杂八',
+    routeName: 'Misc',
+  },
 ]
 
 function App() {
