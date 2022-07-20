@@ -7,7 +7,7 @@ import TabBar from './TabBar'
 import LangPage from './LangPage'
 import ScrollBar from './ScrollBar'
 
-const AnimatedPagerView = Animated.createAnimatedComponent<any>(PagerView)
+const AnimatedPagerView = Animated.createAnimatedComponent<typeof PagerView>(PagerView)
 
 const langs = ['JavaScript', 'Golang', 'Objective-C', 'Python', 'Swift', 'Java', 'Ruby']
 

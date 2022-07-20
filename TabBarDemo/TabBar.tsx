@@ -131,7 +131,6 @@ export default function TabBar({
             onPress={() => handleTabPress(index)}
             onLayout={event => handleTabLayout(index, event.nativeEvent.layout)}
             style={[tabStyle, { marginLeft: index === 0 ? 0 : spacing }]}
-            // @ts-ignore
             labelStyle={[labelStyle, { opacity, transform: [{ scale }] }]}
           />
         )

@@ -45,6 +45,9 @@
     "sass": "^1.53.0",
     "typescript": "^4.3.5"
   },
+  "resolutions": {
+    "@types/react": "^17.0.15"
+  },
   "jest": {
     "preset": "react-native",
     "moduleFileExtensions": [
