@@ -1,41 +1,27 @@
 import React from 'react'
-import { Platform, View, StyleSheet, ViewStyle } from 'react-native'
+import { Platform, View, StyleSheet, ViewProps, ViewStyle } from 'react-native'
 import DropShadow from 'react-native-drop-shadow'
 
 // @ts-ignore
 const __render: any = View.render
 
 // @ts-ignore
-View.render = function (...args: any) {
-  const element: React.ReactElement = __render.call(this, ...args)
+View.render = function (props: ViewProps, ref: React.RefObject<View>) {
   if (Platform.OS === 'ios') {
-    return element
+    return __render.call(this, props, ref)
   }
 
-  return React.cloneElement(
-    element,
-    {},
-    React.Children.map(element.props.children, (child: React.ReactElement) => {
-      if (child.type === 'RCTView') {
-        return hook(child)
-      }
-      return child
-    }),
-  )
-}
+  const { style, ..._props } = props
 
-function hook(element: React.ReactElement) {
-  const style = StyleSheet.flatten(element.props.style) || {}
-  const keys = Object.keys(style)
+  const _style = StyleSheet.flatten(style) || {}
+  const keys = Object.keys(_style)
 
   if (!keys.includes('shadowRadius')) {
-    return element
+    return __render.call(this, props, ref)
   }
 
-  delete style.elevation
-  const { outer, inner } = splitShadowProps(style)
-  const props = element.props
-  delete props.style
+  delete _style.elevation
+  const { outer, inner } = splitShadowProps(_style)
 
   console.log('outer style: ', outer)
   console.log('inner style: ', inner)
@@ -43,7 +29,7 @@ function hook(element: React.ReactElement) {
   return React.createElement(
     DropShadow,
     { style: outer },
-    React.cloneElement(element, { style: inner }),
+    __render.call(this, { ..._props, style: inner }, ref),
   )
 }
 

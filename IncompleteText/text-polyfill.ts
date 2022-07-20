@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, Text } from 'react-native'
+import { Platform, StyleSheet, Text, TextProps } from 'react-native'
 
 const defaultFontFamily = {
   ...Platform.select({
@@ -11,23 +11,12 @@ const defaultFontFamily = {
 const __render: any = Text.render
 
 // @ts-ignore
-Text.render = function (...args: any) {
-  const element: React.ReactElement = __render.call(this, ...args)
+Text.render = function (props: TextProps, ref: React.RefObject<Text>) {
+  if (Platform.OS === 'ios') {
+    return __render.call(this, props, ref)
+  }
 
-  return React.cloneElement(
-    element,
-    { style: [defaultFontFamily, element.props.style] },
-    React.Children.map(element.props.children, (child: React.ReactElement) => {
-      if (child.type === 'RCTText') {
-        return hook(child)
-      }
-      return child
-    }),
-  )
-}
-
-function hook(element: React.ReactElement) {
-  return React.cloneElement(element, {
-    style: [defaultFontFamily, element.props.style],
-  })
+  const { style, ..._props } = props
+  const _style = StyleSheet.flatten(style) || {}
+  return __render.call(this, { ..._props, style: { ...defaultFontFamily, ..._style } }, ref)
 }
