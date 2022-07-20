@@ -19,5 +19,9 @@ export default function CheckGroup({
     }
   }
 
-  return <CheckContext.Provider value={{ checkedItems, setCheckedItems }}>{children}</CheckContext.Provider>
+  return (
+    <CheckContext.Provider value={{ checkedItems, setCheckedItems }}>
+      {children}
+    </CheckContext.Provider>
+  )
 }

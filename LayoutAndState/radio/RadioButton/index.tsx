@@ -1,5 +1,6 @@
 import React from 'react'
-import { ViewStyle, StyleProp, StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { ViewStyle, StyleProp, StyleSheet, Text, View, Pressable } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Item, useRadioContext } from '../RadioContext'
 
 interface RadioButtonProps<T> {
@@ -13,9 +14,11 @@ export default function RadioButton({ item, style }: RadioButtonProps<any>) {
   return (
     <Pressable onPress={onPress} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
       <View style={[styles.container, style]}>
-        <Image
+        <FastImage
           source={checked ? require('./checked.png') : require('./unchecked.png')}
-          style={checked ? styles.checkedRadio : styles.radio}
+          resizeMode="contain"
+          tintColor={checked ? '#448AFF' : '#888888'}
+          style={{ width: 14, height: 14 }}
         />
         <Text style={[styles.label, checked ? styles.checkedLabel : undefined]}>{item.label}</Text>
       </View>
@@ -27,12 +30,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  radio: {
-    tintColor: '#888888',
-  },
-  checkedRadio: {
-    tintColor: '#448AFF',
   },
   label: {
     color: '#888888',

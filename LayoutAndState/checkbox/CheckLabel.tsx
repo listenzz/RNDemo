@@ -1,19 +1,34 @@
 import React from 'react'
-import { Text, StyleSheet, StyleProp, TextStyle, Pressable } from 'react-native'
+import { Text, StyleSheet, StyleProp, TextStyle, Pressable, ViewStyle } from 'react-native'
 import { Item, useCheckContext } from './CheckContext'
 
 interface CheckLabelProps<T> {
   item: Item<T>
-  style?: StyleProp<TextStyle>
-  checkedStyle?: StyleProp<TextStyle>
+  style?: StyleProp<ViewStyle>
+  checkedStyle?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
+  labelCheckedStyle?: StyleProp<TextStyle>
 }
 
-export default function CheckLabel({ item, style, checkedStyle }: CheckLabelProps<any>) {
+export default function CheckLabel({
+  item,
+  style,
+  checkedStyle,
+  labelStyle,
+  labelCheckedStyle,
+}: CheckLabelProps<any>) {
   const [checked, onPress] = useCheckContext(item)
 
   return (
-    <Pressable onPress={onPress}>
-      <Text style={[styles.label, style, checked ? [styles.checked, checkedStyle] : undefined]}>
+    <Pressable
+      style={[styles.button, style, checked ? [styles.buttonChecked, checkedStyle] : undefined]}
+      onPress={onPress}>
+      <Text
+        style={[
+          styles.label,
+          labelStyle,
+          checked ? [styles.labelChecked, labelCheckedStyle] : undefined,
+        ]}>
         {item.label}
       </Text>
     </Pressable>
@@ -21,18 +36,22 @@ export default function CheckLabel({ item, style, checkedStyle }: CheckLabelProp
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#F0F0F0',
+    borderRadius: 4,
+  },
+  buttonChecked: {
+    backgroundColor: '#448AFF',
+  },
   label: {
     color: '#666666',
     fontSize: 14,
-    backgroundColor: '#F0F0F0',
     height: 34,
     lineHeight: 34,
     textAlign: 'center',
-    borderRadius: 4,
   },
-  checked: {
+  labelChecked: {
     color: '#FFFFFF',
-    backgroundColor: '#448AFF',
     fontWeight: 'bold',
   },
 })

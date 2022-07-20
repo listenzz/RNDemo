@@ -6,13 +6,28 @@ interface RadioLabelProps<T> {
   item: Item<T>
   style?: StyleProp<TextStyle>
   checkedStyle?: StyleProp<TextStyle>
+  labelStyle?: StyleProp<TextStyle>
+  labelCheckedStyle?: StyleProp<TextStyle>
 }
 
-export default function RadioLabel({ item, style, checkedStyle }: RadioLabelProps<any>) {
+export default function RadioLabel({
+  item,
+  style,
+  checkedStyle,
+  labelStyle,
+  labelCheckedStyle,
+}: RadioLabelProps<any>) {
   const [checked, onPress] = useRadioContext(item)
   return (
-    <Pressable onPress={onPress}>
-      <Text style={[styles.label, style, checked ? [styles.checked, checkedStyle] : undefined]}>
+    <Pressable
+      style={[styles.button, style, checked ? [styles.buttonChecked, checkedStyle] : undefined]}
+      onPress={onPress}>
+      <Text
+        style={[
+          styles.label,
+          labelStyle,
+          checked ? [styles.labelChecked, labelCheckedStyle] : undefined,
+        ]}>
         {item.label}
       </Text>
     </Pressable>
@@ -20,18 +35,22 @@ export default function RadioLabel({ item, style, checkedStyle }: RadioLabelProp
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#F0F0F0',
+    borderRadius: 4,
+  },
+  buttonChecked: {
+    backgroundColor: '#448AFF',
+  },
   label: {
     color: '#666666',
     fontSize: 14,
-    backgroundColor: '#F0F0F0',
     height: 34,
     lineHeight: 34,
     textAlign: 'center',
-    borderRadius: 4,
   },
-  checked: {
+  labelChecked: {
     color: '#FFFFFF',
-    backgroundColor: '#448AFF',
     fontWeight: 'bold',
   },
 })
