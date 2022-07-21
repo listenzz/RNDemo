@@ -7,7 +7,7 @@ function Misc() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Image source={require('./header.png')} style={styles.image}>
+        <Image source={require('./image.png')} style={styles.image}>
           <Text style={styles.text}>图片中的文字</Text>
         </Image>
       </View>
