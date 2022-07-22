@@ -49,6 +49,17 @@ function splitShadowProps(style: ViewStyle) {
         case 'marginTop':
         case 'marginLeft':
         case 'marginRight':
+        case 'flex':
+        case 'flexGrow':
+        case 'flexShrink':
+        case 'flexBasis':
+        case 'alignSelf':
+        case 'height':
+        case 'minHeight':
+        case 'maxHeight':
+        case 'width':
+        case 'minWidth':
+        case 'maxWidth':
         case 'position':
         case 'left':
         case 'right':
@@ -65,6 +76,10 @@ function splitShadowProps(style: ViewStyle) {
           break
       }
     }
+  }
+
+  if (outer.flex) {
+    inner.flex = 1
   }
 
   return { outer, inner }

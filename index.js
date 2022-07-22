@@ -17,6 +17,8 @@ import Countdown from './Countdown'
 import Misc from './Misc'
 import './Misc/image-polyfill'
 
+import FlatListGridView from './FlatListGridView'
+
 // 配置全局样式
 Garden.setStyle({
   topBarStyle: 'dark-content',
@@ -38,6 +40,7 @@ ReactRegistry.registerComponent('Confirmation', () => Confirmation)
 ReactRegistry.registerComponent('Countdown', () => Countdown)
 ReactRegistry.registerComponent('TabBarDemo', () => TabBarDemo)
 ReactRegistry.registerComponent('Misc', () => Misc)
+ReactRegistry.registerComponent('FlatListGridView', () => FlatListGridView)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()

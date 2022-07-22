@@ -44,6 +44,10 @@ const data: Array<Item> = [
     title: '杂七杂八',
     routeName: 'Misc',
   },
+  {
+    title: 'FlatList 网格',
+    routeName: 'FlatListGridView',
+  },
 ]
 
 function App() {
