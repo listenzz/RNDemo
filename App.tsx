@@ -48,6 +48,14 @@ const data: Array<Item> = [
     title: 'FlatList 网格',
     routeName: 'FlatListGridView',
   },
+  {
+    title: '玩耍输入框',
+    routeName: 'TextInputDemo',
+  },
+  {
+    title: '响应键盘弹起弹落',
+    routeName: 'KeyboardDemo',
+  },
 ]
 
 function App() {

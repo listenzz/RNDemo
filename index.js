@@ -18,6 +18,8 @@ import Misc from './Misc'
 import './Misc/image-polyfill'
 
 import FlatListGridView from './FlatListGridView'
+import TextInputDemo from './TextInputDemo'
+import KeyboardDemo from './KeyboardDemo'
 
 // 配置全局样式
 Garden.setStyle({
@@ -41,6 +43,8 @@ ReactRegistry.registerComponent('Countdown', () => Countdown)
 ReactRegistry.registerComponent('TabBarDemo', () => TabBarDemo)
 ReactRegistry.registerComponent('Misc', () => Misc)
 ReactRegistry.registerComponent('FlatListGridView', () => FlatListGridView)
+ReactRegistry.registerComponent('TextInputDemo', () => TextInputDemo)
+ReactRegistry.registerComponent('KeyboardDemo', () => KeyboardDemo)
 
 // 重要必须
 ReactRegistry.endRegisterComponent()
