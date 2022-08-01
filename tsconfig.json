@@ -9,7 +9,7 @@
     // 但由于使用 Babel 进行转译，实际上这个配置不起作用
     "baseUrl": "./",
     // 设置程序的模块系统，通常是 es6 或者 commonjs
-    // 但由于使用 Babel 进行转译，实际上这个配置不起作用
+    // 但由于使用 Babel 进行转译，总是编译成 commonjs，实际上这个配置不起作用
     "module": "esnext",
     // 指定模块解析策略
     // 但由于使用 Babel 进行转译，实际上这个配置不起作用
@@ -31,14 +31,15 @@
     // Interop Constraints
     // 不会改变代码行为，只是确保每个 ts 文件都可以单独编译，因为 Babel 一次只能在一个文件上操作
     "isolatedModules": true,
-    // 仅对类型检查起作用，让 TypeScript 的行为与 Babel 一致
+    // 对导入 commonjs 的方式进行兼容，仅对类型检查起作用，让 TypeScript 的行为与 Babel 一致
     "allowSyntheticDefaultImports": true,
-    // 会改变 tsc 的行为以及引入工具函数，但因为使用 Babel 来编译，所以这个配置实际上不起作用
+    // 对编译后的代码做兼容性处理，支持 import React from 'react' 这种方式导入 commonjs 模块
+    // 但因为使用 Babel 来编译， Babel 本身对 commonjs 有类似处理，所以这个配置实际上不起作用
     "esModuleInterop": true,
 
     // Language and Environment
     // 控制 JSX 在 JavaScript 文件中的输出方式。这只影响 .tsx 文件的 JS 文件输出
-    // 但由于使用 Babel 进行转译，实际上这个配置不起作用
+    // 但由于使用 Babel 进行转译，总是编译成 react 的模式，实际上这个配置不起作用
     "jsx": "react-native",
     // 使用最新的语法和 API，因为使用 Babel 来编译，仅影响类型检查
     "target": "esnext",
