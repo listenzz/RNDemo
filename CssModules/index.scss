@@ -5,6 +5,9 @@
   font-family: $primary-font;
   font-size: 17px;
   text-align: center;
+  .text {
+    color: rgb(29, 71, 171);
+  }
 }
 
 .container {
@@ -12,14 +15,24 @@
   padding: 16px 32px;
 }
 
-.input {
+%inputText {
   font-size: 14px;
   font-family: $primary-font;
   line-height: 24px;
+}
+
+.input {
+  @extend %inputText;
   padding: 4px 12px;
   margin: 16px 0px;
   height: 80px;
-  border: 1px solid #cccccc;
+  //border: 1px solid #cccccc;
+  border: {
+    color: #cccccc;
+    width: 1px;
+    style: solid;
+    radius: 8px;
+  }
 }
 
 .button {
