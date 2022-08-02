@@ -51,7 +51,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UIViewEdgeAntialiasing</key>
-	<true/>
 </dict>
 </plist>
