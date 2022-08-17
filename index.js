@@ -1,4 +1,4 @@
-import { ReactRegistry, Garden, Navigator } from 'hybrid-navigation'
+import Navigation from 'hybrid-navigation'
 import { Platform } from 'react-native'
 import App from './App'
 import CustomFont from './CustomFont'
@@ -22,34 +22,34 @@ import TextInputDemo from './TextInputDemo'
 import KeyboardDemo from './KeyboardDemo'
 
 // 配置全局样式
-Garden.setStyle({
+Navigation.setDefaultOptions({
   topBarStyle: 'dark-content',
   statusBarColorAndroid: Platform.Version > 21 ? undefined : '#4A4A4A',
   swipeBackEnabledAndroid: true,
 })
 
 // 重要必须
-ReactRegistry.startRegisterComponent()
+Navigation.startRegisterComponent()
 
 // 注意，你的每一个页面都需要注册
-ReactRegistry.registerComponent('App', () => App)
-ReactRegistry.registerComponent('CustomFont', () => CustomFont)
-ReactRegistry.registerComponent('CssModules', () => CssModules)
-ReactRegistry.registerComponent('LayoutAndState', () => LayoutAndState)
-ReactRegistry.registerComponent('ShadowBox', () => ShadowBox)
-ReactRegistry.registerComponent('IncompleteText', () => IncompleteText)
-ReactRegistry.registerComponent('Confirmation', () => Confirmation)
-ReactRegistry.registerComponent('Countdown', () => Countdown)
-ReactRegistry.registerComponent('TabBarDemo', () => TabBarDemo)
-ReactRegistry.registerComponent('Misc', () => Misc)
-ReactRegistry.registerComponent('FlatListGridView', () => FlatListGridView)
-ReactRegistry.registerComponent('TextInputDemo', () => TextInputDemo)
-ReactRegistry.registerComponent('KeyboardDemo', () => KeyboardDemo)
+Navigation.registerComponent('App', () => App)
+Navigation.registerComponent('CustomFont', () => CustomFont)
+Navigation.registerComponent('CssModules', () => CssModules)
+Navigation.registerComponent('LayoutAndState', () => LayoutAndState)
+Navigation.registerComponent('ShadowBox', () => ShadowBox)
+Navigation.registerComponent('IncompleteText', () => IncompleteText)
+Navigation.registerComponent('Confirmation', () => Confirmation)
+Navigation.registerComponent('Countdown', () => Countdown)
+Navigation.registerComponent('TabBarDemo', () => TabBarDemo)
+Navigation.registerComponent('Misc', () => Misc)
+Navigation.registerComponent('FlatListGridView', () => FlatListGridView)
+Navigation.registerComponent('TextInputDemo', () => TextInputDemo)
+Navigation.registerComponent('KeyboardDemo', () => KeyboardDemo)
 
 // 重要必须
-ReactRegistry.endRegisterComponent()
+Navigation.endRegisterComponent()
 
-Navigator.setRoot({
+Navigation.setRoot({
   stack: {
     children: [{ screen: { moduleName: 'App' } }],
   },
