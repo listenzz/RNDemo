@@ -1,106 +1,73 @@
 import React from 'react'
-import { StyleSheet, FlatList, ListRenderItem, Text, TouchableOpacity, Image } from 'react-native'
-import { useNavigator, withNavigationItem } from 'hybrid-navigation'
 
-interface Item {
-  title: string
-  routeName: string
-}
+import List from './List'
+import CustomFont from './CustomFont'
+import CssModules from './CssModules'
+import LayoutAndState from './LayoutAndState'
+import TabBarDemo from './TabBarDemo'
 
-const data: Array<Item> = [
-  {
-    title: '自定义字体',
-    routeName: 'CustomFont',
-  },
-  {
-    title: 'CSS Modules',
-    routeName: 'CssModules',
-  },
-  {
-    title: '分离布局组件和状态组件',
-    routeName: 'LayoutAndState',
-  },
-  {
-    title: '阴影盒子',
-    routeName: 'ShadowBox',
-  },
-  {
-    title: '处理 Android 手机吞字问题',
-    routeName: 'IncompleteText',
-  },
-  {
-    title: '确认码',
-    routeName: 'Confirmation',
-  },
-  {
-    title: '倒计时',
-    routeName: 'Countdown',
-  },
-  {
-    title: '为 PagerView 自定义 TabBar',
-    routeName: 'TabBarDemo',
-  },
-  {
-    title: '杂七杂八',
-    routeName: 'Misc',
-  },
-  {
-    title: 'FlatList 网格',
-    routeName: 'FlatListGridView',
-  },
-  {
-    title: '玩耍输入框',
-    routeName: 'TextInputDemo',
-  },
-  {
-    title: '响应键盘弹起弹落',
-    routeName: 'KeyboardDemo',
-  },
-]
+import './ShadowBox/shadow-polyfill'
+import ShadowBox from './ShadowBox'
 
-function App() {
-  const navigator = useNavigator()
+import './IncompleteText/text-polyfill'
+import IncompleteText from './IncompleteText'
 
-  const renderListItem: ListRenderItem<Item> = ({ item }) => {
-    return <ListItem {...item} onPress={() => navigator.push(item.routeName)} />
-  }
+import Confirmation from './Confirmation'
+import Countdown from './Countdown'
+import Misc from './Misc'
+import './Misc/image-polyfill'
 
-  return <FlatList data={data} keyExtractor={item => item.title} renderItem={renderListItem} />
-}
+import FlatListGridView from './FlatListGridView'
+import TextInputDemo from './TextInputDemo'
+import KeyboardDemo from './KeyboardDemo'
 
-interface ListItemProps {
-  title: string
-  onPress?: () => void
-}
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-function ListItem({ title, onPress }: ListItemProps) {
+const Stack = createNativeStackNavigator()
+
+export default function App() {
   return (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
-      <Image source={require('./assets/indicator.png')} />
-    </TouchableOpacity>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={List} options={{ title: 'RNDemo' }} />
+        <Stack.Screen name="CustomFont" component={CustomFont} options={{ title: 'CustomFont' }} />
+        <Stack.Screen name="CssModules" component={CssModules} options={{ title: 'CssModules' }} />
+        <Stack.Screen
+          name="LayoutAndState"
+          component={LayoutAndState}
+          options={{ title: 'LayoutAndState' }}
+        />
+        <Stack.Screen name="TabBarDemo" component={TabBarDemo} options={{ title: 'TabBarDemo' }} />
+        <Stack.Screen name="ShadowBox" component={ShadowBox} options={{ title: 'ShadowBox' }} />
+        <Stack.Screen
+          name="IncompleteText"
+          component={IncompleteText}
+          options={{ title: 'IncompleteText' }}
+        />
+        <Stack.Screen
+          name="Confirmation"
+          component={Confirmation}
+          options={{ title: 'Confirmation' }}
+        />
+        <Stack.Screen name="Countdown" component={Countdown} options={{ title: 'Countdown' }} />
+        <Stack.Screen name="Misc" component={Misc} options={{ title: 'Misc' }} />
+        <Stack.Screen
+          name="FlatListGridView"
+          component={FlatListGridView}
+          options={{ title: 'FlatListGridView' }}
+        />
+        <Stack.Screen
+          name="TextInputDemo"
+          component={TextInputDemo}
+          options={{ title: 'TextInputDemo' }}
+        />
+        <Stack.Screen
+          name="KeyboardDemo"
+          component={KeyboardDemo}
+          options={{ title: 'KeyboardDemo' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: 'RNDemo',
-  },
-})(App)
-
-const styles = StyleSheet.create({
-  item: {
-    height: 60,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEEEEE',
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  text: {
-    color: '#222222',
-    fontSize: 17,
-  },
-})

@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { withNavigationItem } from 'hybrid-navigation'
 
-function IncompleteText() {
+export default function IncompleteText() {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -26,12 +25,6 @@ function IncompleteText() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '处理 Android 手机吞字问题',
-  },
-})(IncompleteText)
 
 const styles = StyleSheet.create({
   container: {

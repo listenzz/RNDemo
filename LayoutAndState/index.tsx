@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import { withNavigationItem } from 'hybrid-navigation'
 import CheckGroup from './checkbox/CheckGroup'
 import CheckLabel from './checkbox/CheckLabel'
 import GridView from './GridView'
@@ -50,7 +49,7 @@ const edus = [
   { label: '研究生', value: '研究生' },
 ]
 
-function LayoutAndState() {
+export default function LayoutAndState() {
   const [checkedLangs, setCheckedLangs] = useState<Item[]>([])
   const [checkedPlatforms, setCheckedPlatforms] = useState<Item[]>([])
   const [checkedCompanies, setCheckedCompanies] = useState<Item[]>([])
@@ -102,12 +101,6 @@ function LayoutAndState() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: 'Layout 和 State 分离',
-  },
-})(LayoutAndState)
 
 const styles = StyleSheet.create({
   container: {

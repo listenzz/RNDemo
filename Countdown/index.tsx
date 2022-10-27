@@ -1,9 +1,8 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { useCountdown } from './useCountdown'
 
-function Countdown() {
+export default function Countdown() {
   const { count, start, stop } = useCountdown(10)
   const disabled = count !== 0
 
@@ -26,12 +25,6 @@ function Countdown() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '倒计时',
-  },
-})(Countdown)
 
 const styles = StyleSheet.create({
   container: {

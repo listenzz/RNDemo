@@ -1,6 +1,5 @@
 import React from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
-import { withNavigationItem } from 'hybrid-navigation'
 import PagerView from 'react-native-pager-view'
 import usePagerView from './usePagerView'
 import TabBar from './TabBar'
@@ -11,7 +10,7 @@ const AnimatedPagerView = Animated.createAnimatedComponent<typeof PagerView>(Pag
 
 const langs = ['JavaScript', 'Golang', 'Objective-C', 'Python', 'Swift', 'Java', 'Ruby']
 
-function TabBarDemo() {
+export default function TabBarDemo() {
   const {
     pagerRef,
     setPage,
@@ -55,12 +54,6 @@ function TabBarDemo() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '自定义 TabBar',
-  },
-})(TabBarDemo)
 
 const styles = StyleSheet.create({
   container: {

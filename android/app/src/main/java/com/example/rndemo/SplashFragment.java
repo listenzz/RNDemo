@@ -5,10 +5,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
-import com.navigation.androidx.AwesomeFragment;
-
-public class SplashFragment extends AwesomeFragment {
+public class SplashFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

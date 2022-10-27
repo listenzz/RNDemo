@@ -1,8 +1,7 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-function Misc() {
+export default function Misc() {
   // 下面的 `Image` 实质是 `FastImage`
   return (
     <View style={styles.container}>
@@ -14,12 +13,6 @@ function Misc() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '杂七杂八',
-  },
-})(Misc)
 
 const styles = StyleSheet.create({
   container: {

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { withNavigationItem } from 'hybrid-navigation'
 import { Shadow } from 'react-native-shadow-2'
 
-function ShadowBox() {
+export default function ShadowBox() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <View style={[styles.boxShadow, styles.card]}>
@@ -33,12 +32,6 @@ function ShadowBox() {
     </ScrollView>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: 'Shadow Box',
-  },
-})(ShadowBox)
 
 const styles = StyleSheet.create({
   container: {

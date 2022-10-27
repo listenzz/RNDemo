@@ -1,4 +1,3 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import CodeInput from './CodeInput'
@@ -11,7 +10,7 @@ import {
 
 const CELL_COUNT = 4
 
-function Confirmation() {
+export default function Confirmation() {
   const [value, setValue] = useState('')
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT })
@@ -49,12 +48,6 @@ function Confirmation() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '确认码',
-  },
-})(Confirmation)
 
 const styles = StyleSheet.create({
   container: {

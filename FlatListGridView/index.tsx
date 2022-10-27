@@ -1,4 +1,3 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React from 'react'
 import {
   FlatList,
@@ -11,7 +10,7 @@ import {
 
 const data = ['1', '2', '3', '4', '5']
 
-function FlatListGridView() {
+export default function FlatListGridView() {
   const numColumns = useNumColumns()
 
   return (
@@ -72,9 +71,3 @@ const styles = StyleSheet.create({
     color: '#448AFF',
   },
 })
-
-export default withNavigationItem({
-  titleItem: {
-    title: 'FlatList 网格',
-  },
-})(FlatListGridView)

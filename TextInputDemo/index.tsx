@@ -1,8 +1,7 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 
-function TextInputDemo() {
+export default function TextInputDemo() {
   return (
     <View style={styles.container}>
       <TextInput
@@ -34,9 +33,3 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 })
-
-export default withNavigationItem({
-  titleItem: {
-    title: 'TextInputDemo',
-  },
-})(TextInputDemo)

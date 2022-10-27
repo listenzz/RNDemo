@@ -1,4 +1,3 @@
-import { withNavigationItem } from 'hybrid-navigation'
 import React from 'react'
 import {
   View,
@@ -17,7 +16,7 @@ import useKeyboard from './useKeyboard'
 const chats = ['消息1', '消息2', '消息3', '消息4', '消息5']
 const actions = ['照片', '拍摄', '视频', '文件', '位置', '红包']
 
-function KeyboardDemo() {
+export default function KeyboardDemo() {
   const { height, showsActions, onPress, onFocus, onBlur, onTouch } = useKeyboard()
 
   return (
@@ -83,12 +82,6 @@ function ActionBoard() {
     </View>
   )
 }
-
-export default withNavigationItem({
-  titleItem: {
-    title: '响应键盘弹起弹落',
-  },
-})(KeyboardDemo)
 
 const styles = StyleSheet.create({
   container: {
