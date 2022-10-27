@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import List from './List'
 import CustomFont from './CustomFont'
@@ -20,6 +20,7 @@ import './Misc/image-polyfill'
 import FlatListGridView from './FlatListGridView'
 import TextInputDemo from './TextInputDemo'
 import KeyboardDemo from './KeyboardDemo'
+import Splash from './splash'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -27,6 +28,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 const Stack = createNativeStackNavigator()
 
 export default function App() {
+  useEffect(() => {
+    Splash.hide()
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
