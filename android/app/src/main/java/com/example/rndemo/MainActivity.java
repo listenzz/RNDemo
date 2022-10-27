@@ -20,8 +20,8 @@ public class MainActivity extends ReactAppCompatActivity {
     }
 
     @Override
-    protected void setActivityRootFragmentSync(AwesomeFragment fragment, int tag) {
-        super.setActivityRootFragmentSync(fragment, tag);
+    protected void setActivityRootFragmentSync(AwesomeFragment fragment) {
+        super.setActivityRootFragmentSync(fragment);
         // 此时 React Native 已经启动完成，App UI 层级已经构建好
         hideSplash();
     }
