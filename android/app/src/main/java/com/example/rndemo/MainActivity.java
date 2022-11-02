@@ -1,15 +1,19 @@
 package com.example.rndemo;
   
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.navigation.androidx.AwesomeFragment;
+import com.navigation.androidx.StackFragment;
 import com.reactnative.hybridnavigation.ReactAppCompatActivity;
+import com.reactnative.hybridnavigation.ReactBridgeManager;
 
-public class MainActivity extends ReactAppCompatActivity {
+public class MainActivity extends ReactAppCompatActivity implements PrivacyFragment.PrivacyFragmentListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 更改主题为 AppTheme，因为在 AndroidManifest.xml 中将主题设置成了 SplashTheme
@@ -17,12 +21,79 @@ public class MainActivity extends ReactAppCompatActivity {
         super.onCreate(savedInstanceState);
         // 显示 SplashFragment 来作为加载阶段的闪屏
         launchSplash(savedInstanceState);
+
+        // 检查是否已同意隐私政策
+        if (!checkPrivacyAgreement()) {
+            UiThreadUtil.runOnUiThread(() -> {
+                showPrivacyAlert(savedInstanceState);
+            }, 1000);
+        } else {
+            initReactNative();
+        }
+    }
+
+    private void initReactNative() {
+        if (getCurrentReactContext() == null) {
+            ReactBridgeManager.get().initialize();
+        }
+    }
+
+    private boolean checkPrivacyAgreement() {
+        SharedPreferences sharedPreferences = getSharedPreferences("demo_privacy", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("demo_privacy_grant", false);
+    }
+
+    private void markPrivacyAgreement() {
+        SharedPreferences sharedPreferences = getSharedPreferences("demo_privacy", MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("demo_privacy_grant", true).apply();
+    }
+
+    private StackFragment privacyHolder;
+
+    private void showPrivacyAlert(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            String tag = savedInstanceState.getString("privacy_tag");
+            if (tag != null) {
+                privacyHolder = (StackFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            }
+        }
+
+        if (privacyHolder == null) {
+            StackFragment stackFragment = new StackFragment();
+            stackFragment.setRootFragment(new PrivacyFragment());
+            privacyHolder = stackFragment;
+            showAsDialog(privacyHolder, 0);
+        }
+
+        AwesomeFragment rootFragment = privacyHolder.getRootFragment();
+        if (rootFragment instanceof PrivacyFragment) {
+            ((PrivacyFragment) rootFragment).setPrivacyListener(this);
+        }
+    }
+
+    private void hidePrivacyAlert() {
+        if (privacyHolder != null) {
+            privacyHolder.hideAsDialog();
+            privacyHolder = null;
+        }
     }
 
     @Override
-    protected void setActivityRootFragmentSync(AwesomeFragment fragment) {
-        super.setActivityRootFragmentSync(fragment);
-        // 此时 React Native 已经启动完成，App UI 层级已经构建好
+    public void onDeny() {
+        finish();
+    }
+
+    @Override
+    public void onAgree() {
+        hidePrivacyAlert();
+        Toast.makeText(getApplicationContext(), "正在加载资源，请稍后...", Toast.LENGTH_SHORT).show();
+        markPrivacyAgreement();
+        initReactNative();
+    }
+
+    @Override
+    public void setActivityRootFragment(@NonNull AwesomeFragment fragment) {
+        super.setActivityRootFragment(fragment);
         hideSplash();
     }
 
@@ -72,5 +143,9 @@ public class MainActivity extends ReactAppCompatActivity {
         if (splashFragment != null) {
             outState.putString("splash_tag", splashFragment.getSceneId());
         }
+        if (privacyHolder != null) {
+            outState.putString("privacy_tag", privacyHolder.getSceneId());
+        }
     }
+
 }

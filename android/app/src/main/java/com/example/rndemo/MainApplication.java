@@ -44,7 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
 		super.onCreate();
 		SoLoader.init(this, /* native exopackage */ false);
 		ReactBridgeManager bridgeManager = ReactBridgeManager.get();
-		bridgeManager.install(getReactNativeHost());
+		bridgeManager.setReactNativeHost(getReactNativeHost());
 		FLog.setMinimumLoggingLevel(FLog.INFO);
 	}
 	
