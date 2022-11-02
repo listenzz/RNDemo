@@ -1,18 +1,22 @@
 package com.example.rndemo;
 
-
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.UiThreadUtil;
 
 public class MainActivity extends ReactActivity {
 
     private final static String SPLASH_TAG = "splash_tag";
 
     private SplashFragment splashFragment;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +25,55 @@ public class MainActivity extends ReactActivity {
         super.onCreate(null);
         // 显示 SplashFragment 来作为加载阶段的闪屏
         showSplash(savedInstanceState);
+
+        // 检查是否已同意隐私政策
+        if (!checkPrivacyAgreement()) {
+            UiThreadUtil.runOnUiThread(() -> {
+                showPrivacyAlert(savedInstanceState);
+            }, 1000);
+        } else {
+            initReactNative();
+        }
     }
 
     @Nullable
     @Override
     protected String getMainComponentName() {
-        return "RNDemo";
+        // 修改这里，之前是返回 "RNDemo"
+        return null;
+    }
+
+    private boolean checkPrivacyAgreement() {
+        SharedPreferences sharedPreferences = getSharedPreferences("demo_privacy", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("demo_privacy_grant", false);
+    }
+
+    private void markPrivacyAgreement() {
+        SharedPreferences sharedPreferences = getSharedPreferences("demo_privacy", MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("demo_privacy_grant", true).apply();
+    }
+
+    private void showPrivacyAlert(Bundle savedInstanceState) {
+        alertDialog = new AlertDialog.Builder(this)
+                .setTitle("是否同意隐私政策")
+                .setNegativeButton("不同意", (dialog, which) -> {
+                    alertDialog.dismiss();
+                    finish();
+                })
+                .setPositiveButton("同意", (dialog, which) -> {
+                    alertDialog.dismiss();
+                    markPrivacyAgreement();
+                    Toast.makeText(MainActivity.this,  "正在加载资源，请稍后...", Toast.LENGTH_LONG).show();
+                    initReactNative();
+                })
+                .show();
+    }
+
+    private void initReactNative() {
+        // 如果还没有启动 RN
+        if (getReactNativeHost().getReactInstanceManager().getCurrentReactContext() == null) {
+            loadApp("RNDemo");
+        }
     }
 
     private void showSplash(Bundle savedInstanceState) {
