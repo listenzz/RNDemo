@@ -36,10 +36,16 @@ public class MainActivity extends ReactAppCompatActivity {
             }
         }
 
+        // 防止热重启时卡在闪屏
+        if (splashFragment != null) {
+            splashFragment.hideAsDialog();
+            splashFragment = null;
+        }
+
         // 当 Activity 销毁后重建，譬如旋转屏幕的时候，
         // 如果 React Native 已经启动完成，则不再显示闪屏
         ReactContext reactContext = getCurrentReactContext();
-        if (splashFragment == null && reactContext == null) {
+        if (reactContext == null) {
             splashFragment = new SplashFragment();
             showAsDialog(splashFragment, 0);
         }
