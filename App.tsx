@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: '#FFFFFF' } }}>
         <Stack.Screen name="Home" component={List} options={{ title: 'RNDemo' }} />
         <Stack.Screen name="CustomFont" component={CustomFont} options={{ title: 'CustomFont' }} />
         <Stack.Screen name="CssModules" component={CssModules} options={{ title: 'CssModules' }} />
