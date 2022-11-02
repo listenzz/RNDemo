@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:maxHeight="440dp"
+        android:padding="12dp"
+        android:background="@drawable/privacy_alert_background"
+        android:layout_marginHorizontal="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView
+            android:text="法律条款与隐私政策提示"
+            android:gravity="center_horizontal"
+            android:textColor="#1D2023"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/content"
+            android:paddingVertical="12dp"
+            android:textColor="#3F454B"
+            android:textSize="14dp"
+            android:text="我们非常重视您的个人信息和隐私保护，为了有效保障您的个人权益，在使用 RNDemo 服务前，请您务必审慎阅读..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <Button
+                android:id="@+id/deny"
+                android:text="退出"
+                android:textColor="#606972"
+                android:textSize="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"/>
+            
+            <Button
+                android:id="@+id/agree"
+                android:text="同意并继续"
+                android:textColor="@color/colorAccent"
+                android:textSize="16dp"
+                android:layout_marginLeft="12dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"/>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    
+    
+</FrameLayout>

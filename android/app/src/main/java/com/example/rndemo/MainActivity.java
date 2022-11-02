@@ -5,18 +5,17 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 
-public class MainActivity extends ReactActivity {
+public class MainActivity extends ReactActivity implements PrivacyFragment.PrivacyFragmentListener{
 
     private final static String SPLASH_TAG = "splash_tag";
 
     private SplashFragment splashFragment;
-    private AlertDialog alertDialog;
+    private PrivacyFragment privacyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +53,39 @@ public class MainActivity extends ReactActivity {
     }
 
     private void showPrivacyAlert(Bundle savedInstanceState) {
-        alertDialog = new AlertDialog.Builder(this)
-                .setTitle("是否同意隐私政策")
-                .setNegativeButton("不同意", (dialog, which) -> {
-                    alertDialog.dismiss();
-                    finish();
-                })
-                .setPositiveButton("同意", (dialog, which) -> {
-                    alertDialog.dismiss();
-                    markPrivacyAgreement();
-                    Toast.makeText(MainActivity.this,  "正在加载资源，请稍后...", Toast.LENGTH_LONG).show();
-                    initReactNative();
-                })
-                .show();
+        if (savedInstanceState != null) {
+            String tag = savedInstanceState.getString("privacy_tag");
+            if (tag != null) {
+                privacyFragment = (PrivacyFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            }
+        }
+
+        if (privacyFragment == null) {
+            privacyFragment = new PrivacyFragment();
+            privacyFragment.show(getSupportFragmentManager(), "privacy_tag");
+        }
+
+        privacyFragment.setPrivacyListener(this);
+    }
+
+    private void hidePrivacyAlert() {
+        if (privacyFragment != null) {
+            privacyFragment.dismiss();
+            privacyFragment = null;
+        }
+    }
+
+    public void onDeny() {
+        hidePrivacyAlert();
+        finish();
+    }
+
+    @Override
+    public void onAgree() {
+        hidePrivacyAlert();
+        Toast.makeText(getApplicationContext(), "正在加载资源，请稍后...", Toast.LENGTH_SHORT).show();
+        markPrivacyAgreement();
+        initReactNative();
     }
 
     private void initReactNative() {
