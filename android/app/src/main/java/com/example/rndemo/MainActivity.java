@@ -108,6 +108,7 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
         }
 
         // 防止热重启时卡在闪屏
+        // 如果在执行 setActivityRootFragment 之前，Activity 意外销毁重建，会出现卡在闪屏的情况
         if (splashFragment != null) {
             splashFragment.hideAsDialog();
             splashFragment = null;

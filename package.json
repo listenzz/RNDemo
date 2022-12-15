@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@react-native-community/hooks": "^2.8.1",
-    "hybrid-navigation": "^2.13.10",
+    "hybrid-navigation": "^2.13.17",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "react": "17.0.2",
-    "react-native": "^0.67.4",
+    "react-native": "^0.67.5",
     "react-native-confirmation-code-field": "^7.3.0",
     "react-native-drop-shadow": "^0.0.4",
     "react-native-fast-image": "^8.1.5",
