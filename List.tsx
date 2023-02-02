@@ -56,6 +56,14 @@ const data: Array<Item> = [
     title: '响应键盘弹起弹落',
     routeName: 'KeyboardDemo',
   },
+  {
+    title: '响应键盘弹起弹落 -- 原生方案',
+    routeName: 'KeyboardInsets',
+  },
+  {
+    title: '键盘平滑过渡 -- 聊天界面',
+    routeName: 'KeyboardChat',
+  },
 ]
 
 export default function App() {

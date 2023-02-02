@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowCompat;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactContext;
@@ -22,6 +23,9 @@ public class MainActivity extends ReactActivity implements PrivacyFragment.Priva
         // 更改主题为 AppTheme，这是一个 App 的正常主题
         setTheme(R.style.AppTheme);
         super.onCreate(null);
+        // 开启 Edge-to-Edge
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         // 显示 SplashFragment 来作为加载阶段的闪屏
         showSplash(savedInstanceState);
 

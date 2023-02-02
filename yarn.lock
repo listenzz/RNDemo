@@ -5839,6 +5839,11 @@ react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.npmmirror.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
+react-native-keyboard-insets@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-insets/-/react-native-keyboard-insets-1.0.0.tgz#09f413391be47d74393ba7c782e86637741f690d"
+  integrity sha512-7fbW+L1rMk1C4f0Op+AdTgF/DwT/puSRUsXzrVANGiRwX2QJ3hkBdWH8ay34t7peb1mEvNXZwp4cw0rF5n2Wbw==
+
 react-native-pager-view@^5.4.25:
   version "5.4.25"
   resolved "https://registry.npmmirror.com/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz#cd639d5387a7f3d5581b55a33c5faa1cbc200f97"
@@ -5893,10 +5898,10 @@ react-native-testing-library@^6.0.0:
   dependencies:
     pretty-format "^26.0.1"
 
-react-native@^0.67.4:
-  version "0.67.4"
-  resolved "https://registry.npmmirror.com/react-native/-/react-native-0.67.4.tgz#57a1503daa81f66a61f521ff67b259f126d87f9c"
-  integrity sha512-NA9d9lNJu9TViEJu2uZxWXUP+QNUilGGA5tdMbVFedNroOH1lnQ3n/FAVoGK1gqGarCgNTtheBxUpEa979Cu8w==
+react-native@^0.67.5:
+  version "0.67.5"
+  resolved "https://registry.npmmirror.com/react-native/-/react-native-0.67.5.tgz#9f2aeabf0766fb4bd5385685f4f4f2406bcdf819"
+  integrity sha512-/xEksthqImZGDfcqzEmbOw0KRkp9/x+cC8T8uTHhSKLLa8pOFLGdF190UOjnLammGmAmFy0+ZcJf0Ujm53IGeA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
