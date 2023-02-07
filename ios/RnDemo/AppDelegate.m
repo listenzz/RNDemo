@@ -1,9 +1,12 @@
 #import "AppDelegate.h"
+
+#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTBridgeModule.h>
-#import <HybridNavigation/HybridNavigation.h>
+#import <React/RCTRootView.h>
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) SplashWindow *splashWindow;
 
 @end
 
@@ -11,19 +14,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-    [[HBDReactBridgeManager get] installWithBridge:bridge];
-    
-    // 加载 `LaunchScreen`，将它作为 `UIViewController` 的 `view`
-    UIStoryboard *storyboard =  [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
-    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
-    
+    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                   moduleName:@"RNDemo"
+                                            initialProperties:nil];
+
+    if (@available(iOS 13.0, *)) {
+        rootView.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        rootView.backgroundColor = [UIColor whiteColor];
+    }
+
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.windowLevel = UIWindowLevelAlert + 4;
+    UIViewController *rootViewController = [UIViewController new];
+    rootViewController.view = rootView;
     self.window.rootViewController = rootViewController;
     
-    // 一直显示加载阶段的闪屏，直到 React Native 启动完成，
-    // hybrid-navigation 会将 window 的 rootViewController 替换为主界面。
-    [self.window makeKeyAndVisible];
+    self.splashWindow = [[SplashWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.splashWindow show];
+    
     return YES;
 }
 
@@ -33,6 +41,14 @@
 #else
     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (void)hideSplash {
+    if (self.splashWindow != nil) {
+        [self.splashWindow hide:^(BOOL finished) {
+            self.splashWindow = nil;
+        }];
+    }
 }
 
 @end

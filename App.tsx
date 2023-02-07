@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import List from './List'
+import Home from './Home'
 import CustomFont from './CustomFont'
 import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
@@ -19,16 +19,17 @@ import './Misc/image-polyfill'
 
 import FlatListGridView from './FlatListGridView'
 import TextInputDemo from './TextInputDemo'
-import KeyboardDemo from './KeyboardDemo'
 import KeyboardInsets from './KeyboardInsets'
 import KeyboardChat from './KeyboardChat'
 
 import Splash from './splash'
 
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createNativeStackNavigator, NativeStackHeaderProps } from '@react-navigation/native-stack'
+import { getHeaderTitle, Header } from '@react-navigation/elements'
+
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { Platform } from 'react-native'
+import { Platform, View } from 'react-native'
 
 const Stack = createNativeStackNavigator()
 
@@ -40,8 +41,20 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: '#FFFFFF' } }}>
-          <Stack.Screen name="Home" component={List} options={{ title: 'RNDemo' }} />
+        <Stack.Navigator
+          screenOptions={{
+            contentStyle: { backgroundColor: '#FFFFFF' },
+          }}>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              title: 'RNDemo',
+              // Android 开启 Edge-to-Edge 后，首屏 Header 高度不对，疑似 react-navigation 内部 BUG
+              // 这里通过自定义 Header, 简单修复
+              header: Platform.OS === 'android' ? CustomHeader : undefined,
+            }}
+          />
           <Stack.Screen
             name="CustomFont"
             component={CustomFont}
@@ -86,11 +99,6 @@ export default function App() {
             options={{ title: 'TextInputDemo' }}
           />
           <Stack.Screen
-            name="KeyboardDemo"
-            component={KeyboardDemo}
-            options={{ title: 'KeyboardDemo' }}
-          />
-          <Stack.Screen
             name="KeyboardInsets"
             component={KeyboardInsets}
             options={{ title: 'KeyboardInsets' }}
@@ -102,7 +110,42 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-      {Platform.OS === 'android' && <SafeAreaView mode="margin" edges={['bottom']} />}
     </SafeAreaProvider>
+  )
+}
+
+function CustomHeader(props: NativeStackHeaderProps) {
+  const { options, route } = props
+
+  const {
+    headerTintColor,
+    headerTitle,
+    headerTitleAlign,
+    headerTitleStyle,
+    headerStyle,
+    headerShadowVisible,
+    headerTransparent,
+    headerBackground,
+  } = options
+
+  return (
+    <View style={{ elevation: 4, backgroundColor: 'white' }}>
+      <SafeAreaView edges={['top']} />
+      <Header
+        title={getHeaderTitle(options, route.name)}
+        headerTintColor={headerTintColor}
+        headerTitle={
+          typeof headerTitle === 'function'
+            ? ({ children, tintColor }) => headerTitle({ children, tintColor })
+            : headerTitle
+        }
+        headerTitleAlign={headerTitleAlign}
+        headerTitleStyle={headerTitleStyle}
+        headerTransparent={headerTransparent}
+        headerShadowVisible={headerShadowVisible}
+        headerBackground={headerBackground}
+        headerStyle={headerStyle}
+      />
+    </View>
   )
 }

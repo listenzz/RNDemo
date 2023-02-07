@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { StyleSheet, FlatList, ListRenderItem, Text, Image, TouchableOpacity } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface Item {
   title: string
@@ -53,27 +54,31 @@ const data: Array<Item> = [
     routeName: 'TextInputDemo',
   },
   {
-    title: '响应键盘弹起弹落',
-    routeName: 'KeyboardDemo',
-  },
-  {
-    title: '响应键盘弹起弹落 -- 原生方案',
+    title: '避免键盘遮挡输入框',
     routeName: 'KeyboardInsets',
   },
   {
-    title: '键盘平滑过渡 -- 聊天界面',
+    title: '聊天应用键盘交互',
     routeName: 'KeyboardChat',
   },
 ]
 
-export default function App() {
+export default function Home() {
   const navigation = useNavigation<any>()
+  const insets = useSafeAreaInsets()
 
   const renderListItem: ListRenderItem<Item> = ({ item }) => {
     return <ListItem {...item} onPress={() => navigation.navigate(item.routeName)} />
   }
 
-  return <FlatList data={data} keyExtractor={item => item.title} renderItem={renderListItem} />
+  return (
+    <FlatList
+      contentContainerStyle={{ paddingBottom: insets.bottom }}
+      data={data}
+      keyExtractor={item => item.title}
+      renderItem={renderListItem}
+    />
+  )
 }
 
 interface ListItemProps {

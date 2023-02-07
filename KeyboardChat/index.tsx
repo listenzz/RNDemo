@@ -14,7 +14,7 @@ import {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 
-function ReanimatedChat() {
+export default function KeyboardChat() {
   // 需要将 keyboardInsetsView 的 mode 设置为 ‘manual’
   const { bottom } = useKeyboardInsets()
   const keyboardHeight = useKeyboardHeight()
@@ -76,25 +76,17 @@ function ReanimatedChat() {
   )
 
   return (
-    <View style={styles.container}>
-      <Animated.ScrollView showsVerticalScrollIndicator={false} style={scrollViewStyle}>
-        <View style={styles.inverted}>
-          {history.map((message, index) => (
-            <Message key={index} {...message} />
-          ))}
-        </View>
-      </Animated.ScrollView>
-      <AnimatedTextInput ref={inputRef} style={textInputStyle} onLayout={onLayout} />
-      <SafeAreaView edges={['bottom']} />
-    </View>
-  )
-}
-
-export default function ChatScreen() {
-  return (
     <SafeAreaProvider>
-      <KeyboardInsetsView mode="manual" style={{ flex: 1 }}>
-        <ReanimatedChat />
+      <KeyboardInsetsView style={styles.container}>
+        <Animated.ScrollView showsVerticalScrollIndicator={false} style={scrollViewStyle}>
+          <View style={styles.inverted}>
+            {history.map((message, index) => (
+              <Message key={index} {...message} />
+            ))}
+          </View>
+        </Animated.ScrollView>
+        <AnimatedTextInput ref={inputRef} style={textInputStyle} onLayout={onLayout} />
+        <SafeAreaView edges={['bottom']} />
       </KeyboardInsetsView>
     </SafeAreaProvider>
   )

@@ -14,4 +14,4 @@
 - [如何实现可复用的倒计时功能](https://todoit.tech/countdown.html)
 - [如何实现确认码控件](https://todoit.tech/confirmation-code.html)
 - [如何为 PagerView 自定义 TabBar](https://todoit.tech/tabbar.html)
-- [如何响应键盘开启和关闭](https://todoit.tech/keyboard.html)
+- [如何实现聊天应用那样的键盘交互](https://todoit.tech/keyboard-chat.html)
