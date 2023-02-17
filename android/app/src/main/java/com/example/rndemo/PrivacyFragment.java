@@ -40,11 +40,6 @@ public class PrivacyFragment extends AwesomeFragment {
         return BarStyle.LightContent;
     }
 
-    @Override
-    protected int preferredNavigationBarColor() {
-        return Color.WHITE;
-    }
-
     @Nullable
     @Override
     protected AwesomeToolbar onCreateToolbar(View parent) {

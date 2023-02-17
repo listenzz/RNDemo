@@ -53,12 +53,16 @@ const data: Array<Item> = [
     routeName: 'TextInputDemo',
   },
   {
-    title: '响应键盘弹起弹落',
-    routeName: 'KeyboardDemo',
+    title: '避免键盘遮挡输入框',
+    routeName: 'KeyboardInsets',
+  },
+  {
+    title: '聊天应用键盘交互',
+    routeName: 'KeyboardChat',
   },
 ]
 
-function App() {
+function Home() {
   const navigator = useNavigator()
 
   const renderListItem: ListRenderItem<Item> = ({ item }) => {
@@ -86,7 +90,7 @@ export default withNavigationItem({
   titleItem: {
     title: 'RNDemo',
   },
-})(App)
+})(Home)
 
 const styles = StyleSheet.create({
   item: {

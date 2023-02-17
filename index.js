@@ -1,6 +1,6 @@
 import Navigation from 'hybrid-navigation'
 import { Platform } from 'react-native'
-import App from './App'
+import Home from './Home'
 import CustomFont from './CustomFont'
 import CssModules from './CssModules'
 import LayoutAndState from './LayoutAndState'
@@ -19,12 +19,14 @@ import './Misc/image-polyfill'
 
 import FlatListGridView from './FlatListGridView'
 import TextInputDemo from './TextInputDemo'
-import KeyboardDemo from './KeyboardDemo'
+import KeyboardChat from './KeyboardChat'
+import KeyboardInsets from './KeyboardInsets'
 
 // 配置全局样式
 Navigation.setDefaultOptions({
   topBarStyle: 'dark-content',
   statusBarColorAndroid: Platform.Version > 21 ? undefined : '#4A4A4A',
+  navigationBarColorAndroid: '#FFFFFF',
   swipeBackEnabledAndroid: true,
 })
 
@@ -32,7 +34,7 @@ Navigation.setDefaultOptions({
 Navigation.startRegisterComponent()
 
 // 注意，你的每一个页面都需要注册
-Navigation.registerComponent('App', () => App)
+Navigation.registerComponent('Home', () => Home)
 Navigation.registerComponent('CustomFont', () => CustomFont)
 Navigation.registerComponent('CssModules', () => CssModules)
 Navigation.registerComponent('LayoutAndState', () => LayoutAndState)
@@ -44,13 +46,14 @@ Navigation.registerComponent('TabBarDemo', () => TabBarDemo)
 Navigation.registerComponent('Misc', () => Misc)
 Navigation.registerComponent('FlatListGridView', () => FlatListGridView)
 Navigation.registerComponent('TextInputDemo', () => TextInputDemo)
-Navigation.registerComponent('KeyboardDemo', () => KeyboardDemo)
+Navigation.registerComponent('KeyboardInsets', () => KeyboardInsets)
+Navigation.registerComponent('KeyboardChat', () => KeyboardChat)
 
 // 重要必须
 Navigation.endRegisterComponent()
 
 Navigation.setRoot({
   stack: {
-    children: [{ screen: { moduleName: 'App' } }],
+    children: [{ screen: { moduleName: 'Home' } }],
   },
 })
