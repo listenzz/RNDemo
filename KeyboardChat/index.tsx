@@ -1,88 +1,96 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Animated, findNodeHandle, TextInput, View } from 'react-native'
+import React, { useCallback, useRef, useState } from 'react'
+import { Animated, findNodeHandle, Image, Pressable, Text, TextInput, View } from 'react-native'
 
 import Message from './Message'
 import { history } from './Message/data'
 import styles from './styles'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { KeyboardInsetsView, getEdgeInsetsForView, useKeyboard } from 'react-native-keyboard-insets'
+import { KeyboardInsetsView, getEdgeInsetsForView } from 'react-native-keyboard-insets'
 import { withNavigationItem } from 'hybrid-navigation'
-
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
+import { ViewDriver } from './driver/ViewDriver'
+import { Driver } from './driver/Driver'
+import { KeyboardDriver } from './driver/KeyboardDriver'
 
 function KeyboardChat() {
   const inputRef = useRef<TextInput>(null)
-
-  // 为 KeyboardInsetsView 设置 onKeyboard 回调，就会开启手动模式，需要自己处理键盘
-  // 实际上这么简单的 demo，使用自动模式就可以了，这里只是为了演示手动模式的用法
-  const { keyboard, onKeyboard } = useKeyboard()
-
-  const [edgeBottom, setEdgeBottom] = useState(16)
+  const senderRef = useRef<View>(null)
+  const [senderBottom, setBottom] = useState(0)
 
   const onLayout = useCallback(() => {
-    const viewTag = findNodeHandle(inputRef.current)
+    const viewTag = findNodeHandle(senderRef.current)
     if (viewTag === null) {
       return
     }
 
     getEdgeInsetsForView(viewTag, insets => {
-      // console.log('insets', insets)
-      setEdgeBottom(insets.bottom!)
+      setBottom(insets.bottom!)
     })
   }, [])
 
-  const translateY = useMemo(
-    () =>
-      keyboard.position
-        // 实际要移动的距离 = 键盘的高度 - 输入框距屏幕底部的高度
-        .interpolate({
-          inputRange: [0, edgeBottom, Math.max(edgeBottom, keyboard.height)],
-          outputRange: [0, 0, Math.max(keyboard.height - edgeBottom, 0)],
-        })
-        // 反转移动方向
-        .interpolate({ inputRange: [-1, 0, 1], outputRange: [1, 0, -1] }),
-    [keyboard.position, keyboard.height, edgeBottom],
-  )
+  const emojiRef = useRef<View>(null)
+  const toolboxRef = useRef<View>(null)
+  const emoji = useRef(new ViewDriver('emoji', emojiRef)).current
+  const toolbox = useRef(new ViewDriver('toolbox', toolboxRef)).current
+  const keyboard = useRef(new KeyboardDriver(inputRef)).current
 
-  const scrollViewStyle = useMemo(
-    () => ({
-      transform: [
-        {
-          translateY: translateY,
-        },
-        ...styles.inverted.transform,
-      ],
-    }),
-    [translateY],
-  )
+  const [driver, setDriver] = useState<Driver>()
+  const [translateY, setTranslateY] = useState(new Animated.Value(0))
+  const driverState = { bottom: senderBottom, driver, setDriver, setTranslateY }
 
-  const textInputStyle = useMemo(
-    () => ({
-      height: 50,
-      width: '100%',
-      backgroundColor: '#BCBCBC',
-      transform: [
-        {
-          translateY: translateY,
-        },
-      ],
-    }),
-    [translateY],
-  )
+  const mainStyle = {
+    transform: [
+      {
+        translateY: translateY,
+      },
+    ],
+  }
 
   return (
-    <SafeAreaProvider>
-      <KeyboardInsetsView onKeyboard={onKeyboard} style={styles.container}>
-        <Animated.ScrollView showsVerticalScrollIndicator={false} style={scrollViewStyle}>
+    <SafeAreaProvider style={styles.provider}>
+      <KeyboardInsetsView
+        onKeyboard={keyboard.createCallback(driverState)}
+        style={[styles.fill, mainStyle]}>
+        <Animated.ScrollView showsVerticalScrollIndicator={false} style={styles.inverted}>
           <View style={styles.inverted}>
             {history.map((message, index) => (
               <Message key={index} {...message} />
             ))}
           </View>
         </Animated.ScrollView>
-        <AnimatedTextInput ref={inputRef} style={textInputStyle} onLayout={onLayout} />
-        <SafeAreaView edges={['bottom']} />
+        <Animated.View style={styles.sender} ref={senderRef} onLayout={onLayout}>
+          <TextInput ref={inputRef} style={styles.input} />
+          <Pressable
+            style={styles.button}
+            onPress={() => (emoji.shown ? keyboard.show() : emoji.show(driverState))}>
+            <Image
+              source={emoji.shown ? require('./icon/keyboard.png') : require('./icon/emoji.png')}
+            />
+          </Pressable>
+          <Pressable style={styles.button} onPress={() => toolbox.toggle(driverState)}>
+            <Image source={require('./icon/plus.png')} />
+          </Pressable>
+        </Animated.View>
       </KeyboardInsetsView>
+      <SafeAreaView edges={['bottom']} />
+
+      <Animated.View
+        style={[styles.absolute, styles.red, emoji.style]}
+        onLayout={emoji.onLayout}
+        ref={emojiRef}>
+        <View style={styles.emoji}>
+          <Text style={styles.text}>表情包</Text>
+        </View>
+        <SafeAreaView edges={['bottom']} />
+      </Animated.View>
+      <Animated.View
+        style={[styles.absolute, styles.blue, toolbox.style]}
+        onLayout={toolbox.onLayout}
+        ref={toolboxRef}>
+        <View style={styles.toolbox}>
+          <Text style={styles.text}>工具箱</Text>
+        </View>
+        <SafeAreaView edges={['bottom']} />
+      </Animated.View>
     </SafeAreaProvider>
   )
 }

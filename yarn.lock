@@ -5784,10 +5784,10 @@ react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.npmmirror.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-keyboard-insets@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-insets/-/react-native-keyboard-insets-1.2.0.tgz#474bb849083150342da9bedc82f166b73f174ae0"
-  integrity sha512-KWP1zMZBwyOeVn6HK5YjiHtOGmIZou3n5umlCZxM1OAVEF0bnWe8ZwxE1zQjrRjwoFFnt5T1VH5Byf43nm9LCA==
+react-native-keyboard-insets@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-insets/-/react-native-keyboard-insets-1.3.0.tgz#214fd7b9d9bd2bdd4c8c76e65c5401eb380f555c"
+  integrity sha512-sA1lCFqBBR7fxAvd9qB7RkIq3v5reiZZXhmG/Wll2ayvoUJpYLmz9I4JOKtQ/G+wHDGbCDKNzZZySPDK2a11gw==
 
 react-native-pager-view@^5.4.25:
   version "5.4.25"

@@ -25,6 +25,7 @@ import KeyboardInsets from './KeyboardInsets'
 // 配置全局样式
 Navigation.setDefaultOptions({
   topBarStyle: 'dark-content',
+  elevationAndroid: 4,
   statusBarColorAndroid: Platform.Version > 21 ? undefined : '#4A4A4A',
   navigationBarColorAndroid: '#FFFFFF',
   swipeBackEnabledAndroid: true,
