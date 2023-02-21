@@ -82,25 +82,17 @@ export class ViewDriver implements Driver {
     const extraHeight = this.senderBottom - this.viewBottom
     console.log(this.name, 'shown', this.shown, 'height', this.height, 'y', this.y)
     if (!this.shown || this.y === 0) {
-      return this.position
-        .interpolate({
-          inputRange: [0, extraHeight, Math.max(extraHeight, this.height)],
-          outputRange: [0, 0, Math.max(this.height - extraHeight, 0)],
-        })
-        .interpolate({
-          inputRange: [-1, 0, 1],
-          outputRange: [1, 0, -1],
-        }) as Animated.Value
+      return this.position.interpolate({
+        inputRange: [extraHeight, this.height],
+        outputRange: [0, extraHeight - this.height],
+        extrapolate: 'clamp',
+      }) as Animated.Value
     } else {
-      return this.position
-        .interpolate({
-          inputRange: [0, this.height],
-          outputRange: [this.y - extraHeight, this.height - extraHeight],
-        })
-        .interpolate({
-          inputRange: [-1, 0, 1],
-          outputRange: [1, 0, -1],
-        }) as Animated.Value
+      return this.position.interpolate({
+        inputRange: [0, this.height],
+        outputRange: [extraHeight - this.y, extraHeight - this.height],
+        extrapolate: 'clamp',
+      }) as Animated.Value
     }
   }
 
