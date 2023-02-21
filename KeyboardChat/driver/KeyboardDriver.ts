@@ -67,26 +67,19 @@ export class KeyboardDriver implements Driver {
 
   private get translateY() {
     console.log(this.name, 'shown', this.shown, 'height', this.height, 'y', this.y)
+    const extraHeight = this.senderBottom
     if (!this.shown || this.y === 0) {
-      return this.position
-        .interpolate({
-          inputRange: [0, this.senderBottom, Math.max(this.senderBottom, this.height)],
-          outputRange: [0, 0, Math.max(this.height - this.senderBottom, 0)],
-        })
-        .interpolate({
-          inputRange: [-1, 0, 1],
-          outputRange: [1, 0, -1],
-        }) as Animated.Value
+      return this.position.interpolate({
+        inputRange: [extraHeight, this.height],
+        outputRange: [0, extraHeight - this.height],
+        extrapolate: 'clamp',
+      }) as Animated.Value
     } else {
-      return this.position
-        .interpolate({
-          inputRange: [0, this.height],
-          outputRange: [this.y - this.senderBottom, this.height - this.senderBottom],
-        })
-        .interpolate({
-          inputRange: [-1, 0, 1],
-          outputRange: [1, 0, -1],
-        }) as Animated.Value
+      return this.position.interpolate({
+        inputRange: [0, this.height],
+        outputRange: [extraHeight - this.y, extraHeight - this.height],
+        extrapolate: 'clamp',
+      }) as Animated.Value
     }
   }
 }

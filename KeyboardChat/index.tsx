@@ -1,5 +1,14 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { Animated, findNodeHandle, Image, Pressable, Text, TextInput, View } from 'react-native'
+import {
+  Animated,
+  findNodeHandle,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 
 import Message from './Message'
 import { history } from './Message/data'
@@ -14,7 +23,7 @@ import { KeyboardDriver } from './driver/KeyboardDriver'
 function KeyboardChat() {
   const inputRef = useRef<TextInput>(null)
   const senderRef = useRef<View>(null)
-  const [senderBottom, setBottom] = useState(0)
+  const [bottom, setBottom] = useState(0)
 
   const onLayout = useCallback(() => {
     const viewTag = findNodeHandle(senderRef.current)
@@ -35,7 +44,7 @@ function KeyboardChat() {
 
   const [driver, setDriver] = useState<Driver>()
   const [translateY, setTranslateY] = useState(new Animated.Value(0))
-  const driverState = { bottom: senderBottom, driver, setDriver, setTranslateY }
+  const driverState = { bottom, driver, setDriver, setTranslateY }
 
   const mainStyle = {
     transform: [
@@ -50,14 +59,14 @@ function KeyboardChat() {
       <KeyboardInsetsView
         onKeyboard={keyboard.createCallback(driverState)}
         style={[styles.fill, mainStyle]}>
-        <Animated.ScrollView showsVerticalScrollIndicator={false} style={styles.inverted}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.inverted}>
           <View style={styles.inverted}>
             {history.map((message, index) => (
               <Message key={index} {...message} />
             ))}
           </View>
-        </Animated.ScrollView>
-        <Animated.View style={styles.sender} ref={senderRef} onLayout={onLayout}>
+        </ScrollView>
+        <View style={styles.sender} ref={senderRef} onLayout={onLayout}>
           <TextInput ref={inputRef} style={styles.input} />
           <Pressable
             style={styles.button}
@@ -69,7 +78,7 @@ function KeyboardChat() {
           <Pressable style={styles.button} onPress={() => toolbox.toggle(driverState)}>
             <Image source={require('./icon/plus.png')} />
           </Pressable>
-        </Animated.View>
+        </View>
       </KeyboardInsetsView>
       <SafeAreaView edges={['bottom']} />
 
