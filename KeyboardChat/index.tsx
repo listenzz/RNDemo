@@ -35,10 +35,8 @@ export default function KeyboardChat() {
     })
   }, [])
 
-  const emojiRef = useRef<View>(null)
-  const toolboxRef = useRef<View>(null)
-  const emoji = useRef(new ViewDriver('emoji', emojiRef)).current
-  const toolbox = useRef(new ViewDriver('toolbox', toolboxRef)).current
+  const emoji = useRef(new ViewDriver('emoji')).current
+  const toolbox = useRef(new ViewDriver('toolbox')).current
   const keyboard = useRef(new KeyboardDriver(inputRef)).current
 
   const [driver, setDriver] = useState<Driver>()
@@ -81,10 +79,7 @@ export default function KeyboardChat() {
       </KeyboardInsetsView>
       <SafeAreaView edges={['bottom']} />
 
-      <Animated.View
-        style={[styles.absolute, styles.red, emoji.style]}
-        onLayout={emoji.onLayout}
-        ref={emojiRef}>
+      <Animated.View style={[styles.absolute, styles.red, emoji.style]} onLayout={emoji.onLayout}>
         <View style={styles.emoji}>
           <Text style={styles.text}>表情包</Text>
         </View>
@@ -92,8 +87,7 @@ export default function KeyboardChat() {
       </Animated.View>
       <Animated.View
         style={[styles.absolute, styles.blue, toolbox.style]}
-        onLayout={toolbox.onLayout}
-        ref={toolboxRef}>
+        onLayout={toolbox.onLayout}>
         <View style={styles.toolbox}>
           <Text style={styles.text}>工具箱</Text>
         </View>
