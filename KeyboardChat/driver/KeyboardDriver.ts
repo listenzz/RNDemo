@@ -1,4 +1,4 @@
-import { TextInput, Keyboard, Animated, Platform } from 'react-native'
+import { TextInput, Keyboard, Animated } from 'react-native'
 import { KeyboardState } from 'react-native-keyboard-insets'
 import { Driver, DriverState } from './Driver'
 
@@ -30,15 +30,13 @@ export class KeyboardDriver implements Driver {
       const { shown, height, position } = keyboard
 
       const { bottom, driver, setDriver, setTranslateY } = state
+      const heightChanged = height !== this.height
+
       this.height = height
       this.position = position
       this.senderBottom = bottom
 
-      if (shown) {
-        if (Platform.OS === 'android' && this.shown) {
-          return
-        }
-
+      if (shown && (!this.shown || heightChanged)) {
         this.shown = true
         if (driver && driver !== this) {
           // 记录主界面当前位置
@@ -50,11 +48,7 @@ export class KeyboardDriver implements Driver {
         setTranslateY(this.translateY)
       }
 
-      if (!shown) {
-        if (Platform.OS === 'android' && !this.shown) {
-          return
-        }
-
+      if (!shown && this.shown) {
         this.shown = false
         this.y = 0
         if (driver === this) {
@@ -66,8 +60,9 @@ export class KeyboardDriver implements Driver {
   }
 
   private get translateY() {
-    console.log(this.name, 'shown', this.shown, 'height', this.height, 'y', this.y)
     const extraHeight = this.senderBottom
+    console.log(this.name, 'height', this.height, 'y', this.y, 'extraHeight', extraHeight)
+
     if (!this.shown || this.y === 0) {
       return this.position.interpolate({
         inputRange: [extraHeight, this.height],

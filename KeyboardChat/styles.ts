@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   provider: {
     backgroundColor: '#FFFFFF',
+    flex: 1,
   },
   fill: {
     flex: 1,

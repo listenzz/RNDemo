@@ -21,6 +21,7 @@ import FlatListGridView from './FlatListGridView'
 import TextInputDemo from './TextInputDemo'
 import KeyboardChat from './KeyboardChat'
 import KeyboardInsets from './KeyboardInsets'
+import { withSafeAreaProvider } from './withSafeAreaProvider'
 
 // 配置全局样式
 Navigation.setDefaultOptions({
@@ -32,7 +33,7 @@ Navigation.setDefaultOptions({
 })
 
 // 重要必须
-Navigation.startRegisterComponent()
+Navigation.startRegisterComponent(withSafeAreaProvider)
 
 // 注意，你的每一个页面都需要注册
 Navigation.registerComponent('Home', () => Home)

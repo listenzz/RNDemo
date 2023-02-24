@@ -1,47 +1,45 @@
 import React from 'react'
 import { StyleSheet, TextInput, ScrollView } from 'react-native'
 import { KeyboardInsetsView } from 'react-native-keyboard-insets'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function KeyboardInsets() {
   return (
-    <SafeAreaProvider>
-      <KeyboardInsetsView extraHeight={16} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.container}>
-          {Array.from({ length: 9 }).map((item, index) => (
-            <TextInput
-              key={index}
-              style={styles.input}
-              placeholder={`test keyboard instes ${index}`}
-              textAlignVertical="center"
-            />
-          ))}
-          <KeyboardInsetsView extraHeight={16} style={styles.keyboard}>
-            <TextInput
-              style={styles.input}
-              placeholder={'test keyboard instes'}
-              textAlignVertical="center"
-            />
-          </KeyboardInsetsView>
-          {Array.from({ length: 10 }).map((item, index) => (
-            <TextInput
-              key={index + 10}
-              style={styles.input}
-              placeholder={`test keyboard instes ${index + 10}`}
-              textAlignVertical="center"
-            />
-          ))}
-        </ScrollView>
-        <KeyboardInsetsView extraHeight={16} style={[styles.keyboard, { backgroundColor: 'lime' }]}>
+    <KeyboardInsetsView extraHeight={16} style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {Array.from({ length: 9 }).map((item, index) => (
+          <TextInput
+            key={index}
+            style={styles.input}
+            placeholder={`test keyboard instes ${index}`}
+            textAlignVertical="center"
+          />
+        ))}
+        <KeyboardInsetsView extraHeight={16} style={styles.keyboard}>
           <TextInput
             style={styles.input}
             placeholder={'test keyboard instes'}
             textAlignVertical="center"
           />
-          <SafeAreaView edges={['bottom']} />
         </KeyboardInsetsView>
+        {Array.from({ length: 10 }).map((item, index) => (
+          <TextInput
+            key={index + 10}
+            style={styles.input}
+            placeholder={`test keyboard instes ${index + 10}`}
+            textAlignVertical="center"
+          />
+        ))}
+      </ScrollView>
+      <KeyboardInsetsView extraHeight={40} style={[styles.keyboard, { backgroundColor: 'lime' }]}>
+        <TextInput
+          style={styles.input}
+          placeholder={'test keyboard instes'}
+          textAlignVertical="center"
+        />
+        <SafeAreaView edges={['bottom']} />
       </KeyboardInsetsView>
-    </SafeAreaProvider>
+    </KeyboardInsetsView>
   )
 }
 

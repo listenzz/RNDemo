@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, FlatList, ListRenderItem, Text, TouchableOpacity, Image } from 'react-native'
 import { useNavigator, withNavigationItem } from 'hybrid-navigation'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface Item {
   title: string
@@ -65,11 +66,20 @@ const data: Array<Item> = [
 function Home() {
   const navigator = useNavigator()
 
+  const insets = useSafeAreaInsets()
+
   const renderListItem: ListRenderItem<Item> = ({ item }) => {
     return <ListItem {...item} onPress={() => navigator.push(item.routeName)} />
   }
 
-  return <FlatList data={data} keyExtractor={item => item.title} renderItem={renderListItem} />
+  return (
+    <FlatList
+      contentContainerStyle={{ paddingBottom: insets.bottom }}
+      data={data}
+      keyExtractor={item => item.title}
+      renderItem={renderListItem}
+    />
+  )
 }
 
 interface ListItemProps {
