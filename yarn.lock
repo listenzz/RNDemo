@@ -5839,10 +5839,10 @@ react-native-fast-image@^8.1.5:
   resolved "https://registry.npmmirror.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
-react-native-keyboard-insets@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-insets/-/react-native-keyboard-insets-1.3.3.tgz#285be14320642d7605cf8245a044c4cd0440b15b"
-  integrity sha512-43V0xKMc2Zrr8Lpd4g/P5Wd5dAkOVy93go1+QqYqZtbdlAUnvrGdw+6pC5IEBfQq1i0ZfnW6VPnTcKcwPdH19w==
+react-native-keyboard-insets@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.npmmirror.com/react-native-keyboard-insets/-/react-native-keyboard-insets-1.3.4.tgz#a937fe6dedd8d24e51d6f610a6d8730d24b31527"
+  integrity sha512-x0FIGOM4AZqcJRg4Ill5vftv6aFxrEI/04YsvLrF7Xyraq5no2v/sUD5gMT/cJt+XNqKcFOEkVo5qAcRGR36UQ==
 
 react-native-pager-view@^5.4.25:
   version "5.4.25"
