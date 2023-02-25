@@ -31,7 +31,7 @@ export default function KeyboardInsets() {
           />
         ))}
       </ScrollView>
-      <KeyboardInsetsView extraHeight={40} style={[styles.keyboard, { backgroundColor: 'lime' }]}>
+      <KeyboardInsetsView extraHeight={16} style={[styles.keyboard, { backgroundColor: 'lime' }]}>
         <TextInput
           style={styles.input}
           placeholder={'test keyboard instes'}
