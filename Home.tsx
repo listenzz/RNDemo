@@ -61,6 +61,10 @@ const data: Array<Item> = [
     title: '聊天应用键盘交互',
     routeName: 'KeyboardChat',
   },
+  {
+    title: '悬浮球',
+    routeName: 'FloatingBall',
+  },
 ]
 
 function Home() {

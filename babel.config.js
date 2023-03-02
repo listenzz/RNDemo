@@ -8,5 +8,6 @@ module.exports = {
         extensions: ['scss', 'sass'],
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 }

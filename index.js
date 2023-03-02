@@ -21,6 +21,8 @@ import FlatListGridView from './FlatListGridView'
 import TextInputDemo from './TextInputDemo'
 import KeyboardChat from './KeyboardChat'
 import KeyboardInsets from './KeyboardInsets'
+import FloatingBall from './FloatingBall'
+
 import { withSafeAreaProvider } from './withSafeAreaProvider'
 
 // 配置全局样式
@@ -50,6 +52,7 @@ Navigation.registerComponent('FlatListGridView', () => FlatListGridView)
 Navigation.registerComponent('TextInputDemo', () => TextInputDemo)
 Navigation.registerComponent('KeyboardInsets', () => KeyboardInsets)
 Navigation.registerComponent('KeyboardChat', () => KeyboardChat)
+Navigation.registerComponent('FloatingBall', () => FloatingBall)
 
 // 重要必须
 Navigation.endRegisterComponent()
