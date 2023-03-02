@@ -1,4 +1,3 @@
-// shadow-polyfill.ts
 import React from 'react'
 import { Platform, View, StyleSheet, ViewProps, ViewStyle } from 'react-native'
 import DropShadow from 'react-native-drop-shadow'
@@ -24,6 +23,9 @@ View.render = function (props: ViewProps, ref: React.RefObject<View>) {
   delete _style.elevation
   const { outer, inner } = splitShadowProps(_style)
 
+  console.log('outer style: ', outer)
+  console.log('inner style: ', inner)
+
   return React.createElement(
     DropShadow,
     { style: outer },
@@ -47,7 +49,17 @@ function splitShadowProps(style: ViewStyle) {
         case 'marginTop':
         case 'marginLeft':
         case 'marginRight':
+        case 'flex':
+        case 'flexGrow':
+        case 'flexShrink':
+        case 'flexBasis':
         case 'alignSelf':
+        case 'height':
+        case 'minHeight':
+        case 'maxHeight':
+        case 'width':
+        case 'minWidth':
+        case 'maxWidth':
         case 'position':
         case 'left':
         case 'right':
