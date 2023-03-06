@@ -83,5 +83,13 @@ function splitShadowProps(style: ViewStyle) {
     inner.flex = 1
   }
 
+  if (outer.width) {
+    inner.width = '100%'
+  }
+
+  if (outer.height) {
+    inner.height = '100%'
+  }
+
   return { outer, inner }
 }

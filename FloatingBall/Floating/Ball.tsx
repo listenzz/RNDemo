@@ -73,10 +73,13 @@ export default function Ball({
     })
 
   return (
-    <Animated.View style={[styles.shadow, floatStyles]}>
+    <Animated.View style={[Platform.OS === 'ios' ? styles.shadow : undefined, floatStyles]}>
       <GestureHandlerRootView>
         <GestureDetector gesture={Gesture.Simultaneous(dragGesture, singleTap)}>
-          <Animated.View style={[animatedStyles]}>{children}</Animated.View>
+          <Animated.View
+            style={[Platform.OS === 'android' ? styles.shadow : undefined, animatedStyles]}>
+            {children}
+          </Animated.View>
         </GestureDetector>
       </GestureHandlerRootView>
     </Animated.View>
