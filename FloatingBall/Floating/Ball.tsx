@@ -35,7 +35,7 @@ export default function Ball({
       borderRadius: anchor.size / 2,
       overflow: 'hidden',
     }
-  })
+  }, [])
 
   const floatStyles = useAnimatedStyle(() => {
     return {
@@ -43,7 +43,7 @@ export default function Ball({
       left: x.value,
       top: y.value,
     }
-  })
+  }, [])
 
   const singleTap = Gesture.Tap()
     .maxDistance(2)

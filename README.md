@@ -2,6 +2,8 @@
 
 演示一些和 React Native 相关的技巧
 
+如果你使用 react-navigation, 请切换至 [react-navigation 分支](https://github.com/listenzz/RNDemo/tree/react-navigation)。
+
 - [编写可复用 UI 小技巧：分离布局组件和状态组件](https://todoit.tech/layout-and-state.html)
 - [如何添加自定义字体](https://todoit.tech/custom-font.html)
 - [如何使用 CSS Modules](https://todoit.tech/css-module.html)
@@ -14,4 +16,4 @@
 - [如何实现可复用的倒计时功能](https://todoit.tech/countdown.html)
 - [如何实现确认码控件](https://todoit.tech/confirmation-code.html)
 - [如何为 PagerView 自定义 TabBar](https://todoit.tech/tabbar.html)
-- [如何响应键盘开启和关闭](https://todoit.tech/keyboard.html)
+- [如何响应键盘开启和关闭](https://todoit.tech/keyboard-chat.html)
