@@ -13,8 +13,7 @@ import { BallProps } from './types'
 export default function Ball({
   anchor,
   children,
-  onPress,
-  onPositionChange = () => {},
+  onOffsetChanged = () => {},
 }: PropsWithChildren<BallProps>) {
   const barHeight = statusBarHeight()
   const offsetY = statusBarHeight()
@@ -45,15 +44,11 @@ export default function Ball({
     }
   }, [])
 
-  const singleTap = Gesture.Tap()
-    .maxDistance(2)
-    .onEnd(runOnJS(() => onPress?.()))
-
   const dragGesture = Gesture.Pan()
     .onChange(e => {
       transf.value = { x: e.changeX + transf.value.x, y: e.changeY + transf.value.y }
     })
-    .onFinalize(e => {
+    .onEnd(e => {
       transf.value = { x: 0, y: 0 }
       x.value = e.absoluteX - e.x
       const finalX =
@@ -69,13 +64,13 @@ export default function Ball({
         overshootClamping: true,
       })
 
-      runOnJS(onPositionChange)(finalX, finalY)
+      runOnJS(onOffsetChanged)(finalX, finalY)
     })
 
   return (
     <Animated.View style={animatedStyles}>
       <GestureHandlerRootView>
-        <GestureDetector gesture={Gesture.Simultaneous(dragGesture, singleTap)}>
+        <GestureDetector gesture={dragGesture}>
           <Animated.View style={[styles.shadow, ballStyles]}>{children}</Animated.View>
         </GestureDetector>
       </GestureHandlerRootView>
@@ -84,6 +79,7 @@ export default function Ball({
 }
 
 const styles = StyleSheet.create({
+  // Android 的 shadow 来源于 shadow-polyfill.tsx
   shadow: {
     shadowColor: '#000',
     shadowRadius: 8,

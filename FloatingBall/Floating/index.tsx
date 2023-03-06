@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { AppRegistry, Pressable, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, Pressable, StyleSheet, Text } from 'react-native'
 import Overlay from 'hybrid-navigation-overlay'
 import { statusBarHeight } from 'hybrid-navigation'
 
@@ -8,7 +8,7 @@ import Menu from './Menu'
 
 const menus = ['菜单1', '菜单2', '菜单3']
 
-function App() {
+function MyFloating() {
   const [menuVisible, setMenuVisible] = useState(false)
 
   const left = useRef(8)
@@ -22,9 +22,9 @@ function App() {
 
   function renderAnchor() {
     return (
-      <View style={styles.ball}>
+      <Pressable style={styles.ball} onPress={() => setMenuVisible(true)}>
         <Text>Menu</Text>
-      </View>
+      </Pressable>
     )
   }
 
@@ -55,8 +55,7 @@ function App() {
   return (
     <Ball
       anchor={anchor}
-      onPress={() => setMenuVisible(true)}
-      onPositionChange={(x, y) => {
+      onOffsetChanged={(x, y) => {
         left.current = x
         top.current = y
       }}>
@@ -89,7 +88,7 @@ function registerIfNeeded() {
   if (AppRegistry.getAppKeys().includes('__overlay_floating__')) {
     return
   }
-  AppRegistry.registerComponent('__overlay_floating__', () => App)
+  AppRegistry.registerComponent('__overlay_floating__', () => MyFloating)
 }
 
 function show() {

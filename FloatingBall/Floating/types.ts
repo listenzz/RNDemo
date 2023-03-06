@@ -6,6 +6,5 @@ export interface Anchor {
 
 export interface BallProps {
   anchor: Anchor
-  onPress?: () => void
-  onPositionChange?: (x: number, y: number) => void
+  onOffsetChanged?: (x: number, y: number) => void
 }

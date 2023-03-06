@@ -13,8 +13,7 @@ import { BallProps } from './types'
 export default function Ball({
   anchor,
   children,
-  onPress,
-  onPositionChange = () => {},
+  onOffsetChanged = () => {},
 }: PropsWithChildren<BallProps>) {
   const barHeight = statusBarHeight()
 
@@ -43,16 +42,12 @@ export default function Ball({
     }
   }, [])
 
-  const singleTap = Gesture.Tap()
-    .maxDistance(2)
-    .onEnd(runOnJS(() => onPress?.()))
-
   const dragGesture = Gesture.Pan()
     .onChange(e => {
       x.value = x.value + e.changeX
       y.value = y.value + e.changeY
     })
-    .onFinalize(e => {
+    .onEnd(e => {
       x.value = e.absoluteX - e.x
       const finalX =
         x.value > (windowWidth - anchor.size) / 2 ? windowWidth - anchor.size - gap : gap
@@ -67,13 +62,13 @@ export default function Ball({
         overshootClamping: true,
       })
 
-      runOnJS(onPositionChange)(finalX, finalY)
+      runOnJS(onOffsetChanged)(finalX, finalY)
     })
 
   return (
     <Animated.View style={[animatedStyles, styles.shadow]}>
       <GestureHandlerRootView>
-        <GestureDetector gesture={Gesture.Simultaneous(dragGesture, singleTap)}>
+        <GestureDetector gesture={dragGesture}>
           <View style={ballStyles}>{children}</View>
         </GestureDetector>
       </GestureHandlerRootView>
