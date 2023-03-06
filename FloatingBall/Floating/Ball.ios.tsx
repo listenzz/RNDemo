@@ -1,6 +1,6 @@
 import { statusBarHeight } from 'hybrid-navigation'
-import React, { PropsWithChildren } from 'react'
-import { StyleSheet, useWindowDimensions } from 'react-native'
+import React, { PropsWithChildren, useMemo } from 'react'
+import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
 import Animated, {
   runOnJS,
@@ -17,25 +17,23 @@ export default function Ball({
   onPositionChange = () => {},
 }: PropsWithChildren<BallProps>) {
   const barHeight = statusBarHeight()
-  const offsetY = statusBarHeight()
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions()
 
   const gap = 8
 
-  const transf = useSharedValue({ x: 0, y: 0 })
   const x = useSharedValue(anchor.x)
   const y = useSharedValue(anchor.y)
 
-  const ballStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: transf.value.x }, { translateY: transf.value.y }],
+  const ballStyles: StyleProp<ViewStyle> = useMemo(
+    () => ({
       width: anchor.size,
       height: anchor.size,
       borderRadius: anchor.size / 2,
       overflow: 'hidden',
-    }
-  }, [])
+    }),
+    [anchor.size],
+  )
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -51,10 +49,10 @@ export default function Ball({
 
   const dragGesture = Gesture.Pan()
     .onChange(e => {
-      transf.value = { x: e.changeX + transf.value.x, y: e.changeY + transf.value.y }
+      x.value = x.value + e.changeX
+      y.value = y.value + e.changeY
     })
     .onFinalize(e => {
-      transf.value = { x: 0, y: 0 }
       x.value = e.absoluteX - e.x
       const finalX =
         x.value > (windowWidth - anchor.size) / 2 ? windowWidth - anchor.size - gap : gap
@@ -62,7 +60,7 @@ export default function Ball({
         stiffness: 500,
         overshootClamping: true,
       })
-      y.value = e.absoluteY + offsetY - e.y
+      y.value = e.absoluteY - e.y
       const finalY = Math.min(Math.max(barHeight, y.value), windowHeight - anchor.size - gap)
       y.value = withSpring(finalY, {
         stiffness: 500,
@@ -73,10 +71,10 @@ export default function Ball({
     })
 
   return (
-    <Animated.View style={animatedStyles}>
+    <Animated.View style={[animatedStyles, styles.shadow]}>
       <GestureHandlerRootView>
         <GestureDetector gesture={Gesture.Simultaneous(dragGesture, singleTap)}>
-          <Animated.View style={[styles.shadow, ballStyles]}>{children}</Animated.View>
+          <View style={ballStyles}>{children}</View>
         </GestureDetector>
       </GestureHandlerRootView>
     </Animated.View>
