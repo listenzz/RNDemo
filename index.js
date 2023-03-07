@@ -23,6 +23,12 @@ import KeyboardChat from './KeyboardChat'
 import KeyboardInsets from './KeyboardInsets'
 import FloatingBall from './FloatingBall'
 
+import './PullToRefresh/setup'
+import PullToRefresh from './PullToRefresh'
+import BottomSheet from './BottomSheet'
+
+import NestedScroll from './NestedScroll'
+
 import { withSafeAreaProvider } from './withSafeAreaProvider'
 
 // 配置全局样式
@@ -32,6 +38,7 @@ Navigation.setDefaultOptions({
   statusBarColorAndroid: Platform.Version > 21 ? undefined : '#4A4A4A',
   navigationBarColorAndroid: '#FFFFFF',
   swipeBackEnabledAndroid: true,
+  fitsOpaqueNavigationBarAndroid: true,
 })
 
 // 重要必须
@@ -53,6 +60,9 @@ Navigation.registerComponent('TextInputDemo', () => TextInputDemo)
 Navigation.registerComponent('KeyboardInsets', () => KeyboardInsets)
 Navigation.registerComponent('KeyboardChat', () => KeyboardChat)
 Navigation.registerComponent('FloatingBall', () => FloatingBall)
+Navigation.registerComponent('PullToRefresh', () => PullToRefresh)
+Navigation.registerComponent('BottomSheet', () => BottomSheet)
+Navigation.registerComponent('NestedScroll', () => NestedScroll)
 
 // 重要必须
 Navigation.endRegisterComponent()

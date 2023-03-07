@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { AppRegistry, Pressable, StyleSheet, Text } from 'react-native'
-import Overlay from 'hybrid-navigation-overlay'
+import { Overlay } from '@sdcx/overlay'
 import { statusBarHeight } from 'hybrid-navigation'
 
 import Ball from './Ball'
@@ -93,7 +93,7 @@ function registerIfNeeded() {
 
 function show() {
   registerIfNeeded()
-  Overlay.show('__overlay_floating__', { passThroughTouches: true })
+  Overlay.show('__overlay_floating__', {}, { passThroughTouches: true })
 }
 
 function hide() {

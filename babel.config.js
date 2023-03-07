@@ -9,5 +9,16 @@ module.exports = {
       },
     ],
     'react-native-reanimated/plugin',
+    [
+      'module-resolver',
+      {
+        root: './src',
+        cwd: 'babelrc',
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        alias: {
+          assets: './assets',
+        },
+      },
+    ],
   ],
 }

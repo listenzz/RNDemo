@@ -1,6 +1,6 @@
 module.exports = {
   dependencies: {
-    'hybrid-navigation-overlay': {
+    '@sdcx/overlay': {
       platforms: {
         android: {
           packageInstance: 'new OverlayPackage(getReactNativeHost())',

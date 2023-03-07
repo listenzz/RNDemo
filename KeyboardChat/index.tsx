@@ -99,6 +99,7 @@ function KeyboardChat() {
 }
 
 export default withNavigationItem({
+  fitsOpaqueNavigationBarAndroid: false,
   titleItem: {
     title: '聊天键盘处理',
   },

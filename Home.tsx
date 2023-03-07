@@ -65,6 +65,18 @@ const data: Array<Item> = [
     title: '悬浮球',
     routeName: 'FloatingBall',
   },
+  {
+    title: '下拉刷新',
+    routeName: 'PullToRefresh',
+  },
+  {
+    title: 'BottomSheet',
+    routeName: 'BottomSheet',
+  },
+  {
+    title: 'NestedScroll',
+    routeName: 'NestedScroll',
+  },
 ]
 
 function Home() {
