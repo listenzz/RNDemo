@@ -1,5 +1,5 @@
 package com.example.rndemo;
-  
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.navigation.androidx.AwesomeFragment;
-import com.navigation.androidx.StackFragment;
 import com.reactnative.hybridnavigation.ReactAppCompatActivity;
 import com.reactnative.hybridnavigation.ReactBridgeManager;
 
@@ -48,33 +47,28 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
         sharedPreferences.edit().putBoolean("demo_privacy_grant", true).apply();
     }
 
-    private StackFragment privacyHolder;
+    private PrivacyFragment privacyFragment;
 
     private void showPrivacyAlert(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             String tag = savedInstanceState.getString("privacy_tag");
             if (tag != null) {
-                privacyHolder = (StackFragment) getSupportFragmentManager().findFragmentByTag(tag);
+                privacyFragment = (PrivacyFragment) getSupportFragmentManager().findFragmentByTag(tag);
             }
         }
 
-        if (privacyHolder == null) {
-            StackFragment stackFragment = new StackFragment();
-            stackFragment.setRootFragment(new PrivacyFragment());
-            privacyHolder = stackFragment;
-            showAsDialog(privacyHolder, 0);
+        if (privacyFragment == null) {
+            privacyFragment = new PrivacyFragment();
+            showAsDialog(privacyFragment, 0);
         }
 
-        AwesomeFragment rootFragment = privacyHolder.getRootFragment();
-        if (rootFragment instanceof PrivacyFragment) {
-            ((PrivacyFragment) rootFragment).setPrivacyListener(this);
-        }
+        privacyFragment.setPrivacyListener(this);
     }
 
     private void hidePrivacyAlert() {
-        if (privacyHolder != null) {
-            privacyHolder.hideAsDialog();
-            privacyHolder = null;
+        if (privacyFragment != null) {
+            privacyFragment.hideAsDialog();
+            privacyFragment = null;
         }
     }
 
@@ -144,8 +138,8 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
         if (splashFragment != null) {
             outState.putString("splash_tag", splashFragment.getSceneId());
         }
-        if (privacyHolder != null) {
-            outState.putString("privacy_tag", privacyHolder.getSceneId());
+        if (privacyFragment != null) {
+            outState.putString("privacy_tag", privacyFragment.getSceneId());
         }
     }
 

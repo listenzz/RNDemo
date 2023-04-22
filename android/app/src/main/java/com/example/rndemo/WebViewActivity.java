@@ -1,40 +1,39 @@
 package com.example.rndemo;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.navigation.androidx.AwesomeFragment;
-
-public class WebViewFragment extends AwesomeFragment {
+public class WebViewActivity extends AppCompatActivity {
 
     private WebView mWebView;
-    
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_web_view, container, false);
-    }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
 
-        WebView webView = view.findViewById(R.id.myWebView);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        Drawable icon = getDrawable(R.drawable.nav_ic_arrow_back);
+        icon.setTint(Color.BLACK);
+        toolbar.setNavigationIcon(icon);
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        WebView webView = findViewById(R.id.myWebView);
         mWebView = webView;
-        
+
         // 进度条
-        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -65,14 +64,14 @@ public class WebViewFragment extends AwesomeFragment {
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-        
-        Bundle args = getArguments();
+
+        Bundle args = getIntent().getExtras();
         webView.loadUrl(args.getString("url"));
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
         mWebView.destroy();
-        super.onDestroyView();
+        super.onDestroy();
     }
 }

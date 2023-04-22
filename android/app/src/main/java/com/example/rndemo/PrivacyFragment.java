@@ -1,5 +1,6 @@
 package com.example.rndemo;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -83,12 +84,11 @@ public class PrivacyFragment extends AwesomeFragment {
         ClickableSpan contractSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                WebViewFragment webView = new WebViewFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", "https://www.baidu.com");
-                bundle.putString("title", "用户服务协议");
-                webView.setArguments(bundle);
-                requireStackFragment().pushFragment(webView);
+                Intent intent = new Intent();
+                intent.setClass(requireContext(), WebViewActivity.class);
+                intent.putExtra("url", "https://www.baidu.com");
+                intent.putExtra("title", "用户服务协议");
+                startActivity(intent);
             }
 
             @Override
@@ -108,12 +108,11 @@ public class PrivacyFragment extends AwesomeFragment {
         ClickableSpan privacySpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                WebViewFragment webView = new WebViewFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", "https://imcoding.tech");
-                bundle.putString("title", "隐私权政策");
-                webView.setArguments(bundle);
-                requireStackFragment().pushFragment(webView);
+                Intent intent = new Intent();
+                intent.setClass(requireContext(), WebViewActivity.class);
+                intent.putExtra("url", "https://todoit.tech");
+                intent.putExtra("title", "隐私权政策");
+                startActivity(intent);
             }
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
