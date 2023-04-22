@@ -30,6 +30,10 @@ import { getHeaderTitle, Header } from '@react-navigation/elements'
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Platform, View } from 'react-native'
+import FloatingBall from './FloatingBall'
+import PullToRefresh from './PullToRefresh'
+import BottomSheet from './BottomSheet'
+import NestedScroll from './NestedScroll'
 
 const Stack = createNativeStackNavigator()
 
@@ -107,6 +111,26 @@ export default function App() {
             name="KeyboardChat"
             component={KeyboardChat}
             options={{ title: 'KeyboardChat' }}
+          />
+          <Stack.Screen
+            name="FloatingBall"
+            component={FloatingBall}
+            options={{ title: 'FloatingBall' }}
+          />
+          <Stack.Screen
+            name="PullToRefresh"
+            component={PullToRefresh}
+            options={{ title: 'PullToRefresh' }}
+          />
+          <Stack.Screen
+            name="BottomSheet"
+            component={BottomSheet}
+            options={{ title: 'BottomSheet' }}
+          />
+          <Stack.Screen
+            name="NestedScroll"
+            component={NestedScroll}
+            options={{ title: 'NestedScroll' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

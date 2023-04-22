@@ -3,7 +3,7 @@ import { Animated, Platform, StyleProp, StyleSheet, TextStyle, View, ViewStyle }
 import TabBarIndicator from './TabBarIndicator'
 import TabBarItem from './TabBarItem'
 
-interface TabBarProps {
+export interface TabBarProps {
   tabs: string[]
   onTabPress: (index: number) => void
   onTabsLayout?: (layouts: Layout[]) => void

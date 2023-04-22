@@ -61,6 +61,22 @@ const data: Array<Item> = [
     title: '聊天应用键盘交互',
     routeName: 'KeyboardChat',
   },
+  {
+    title: '悬浮球',
+    routeName: 'FloatingBall',
+  },
+  {
+    title: '下拉刷新',
+    routeName: 'PullToRefresh',
+  },
+  {
+    title: 'BottomSheet',
+    routeName: 'BottomSheet',
+  },
+  {
+    title: 'NestedScroll',
+    routeName: 'NestedScroll',
+  },
 ]
 
 export default function Home() {
