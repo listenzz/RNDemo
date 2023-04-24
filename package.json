@@ -18,7 +18,7 @@
     "@sdcx/bottom-sheet": "^0.2.0",
     "@sdcx/nested-scroll": "^0.3.0",
     "@sdcx/overlay": "^0.1.0",
-    "@sdcx/pull-to-refresh": "^0.1.0",
+    "@sdcx/pull-to-refresh": "^0.2.0",
     "@shopify/flash-list": "^1.4.2",
     "lottie-react-native": "^5.1.5",
     "patch-package": "^6.4.7",
