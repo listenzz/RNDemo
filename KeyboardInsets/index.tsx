@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, TextInput, ScrollView } from 'react-native'
-import { KeyboardInsetsView } from 'react-native-keyboard-insets'
+import { KeyboardInsetsView } from '@sdcx/keyboard-insets'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 export default function KeyboardInsets() {

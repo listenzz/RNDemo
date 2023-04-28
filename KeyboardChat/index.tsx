@@ -14,7 +14,7 @@ import Message from './Message'
 import { history } from './Message/data'
 import styles from './styles'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { KeyboardInsetsView, getEdgeInsetsForView } from 'react-native-keyboard-insets'
+import { KeyboardInsetsView, getEdgeInsetsForView } from '@sdcx/keyboard-insets'
 import { ViewDriver } from './driver/ViewDriver'
 import { Driver } from './driver/Driver'
 import { KeyboardDriver } from './driver/KeyboardDriver'
@@ -64,7 +64,7 @@ export default function KeyboardChat() {
           </View>
         </ScrollView>
         <View style={styles.sender} ref={senderRef} onLayout={onLayout}>
-          <TextInput ref={inputRef} style={styles.input} />
+          <TextInput ref={inputRef} style={styles.input} multiline textAlignVertical="center" />
           <Pressable
             style={styles.button}
             onPress={() => (emoji.shown ? keyboard.show() : emoji.show(driverState))}>
