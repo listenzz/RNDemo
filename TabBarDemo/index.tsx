@@ -3,7 +3,7 @@ import { Animated, StyleSheet, View } from 'react-native'
 import { withNavigationItem } from 'hybrid-navigation'
 import PagerView from 'react-native-pager-view'
 import usePagerView from '../components/TabBar/usePagerView'
-import TabBar from '../components/TabBar'
+import TabBar from '../components/TabBar/TabBar'
 import LangPage from './LangPage'
 import ScrollBar from '../components/TabBar/ScrollBar'
 
