@@ -2,9 +2,9 @@ import React from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import PagerView from 'react-native-pager-view'
 import usePagerView from '../components/TabBar/usePagerView'
-import TabBar from '../components/TabBar'
-import LangPage from './LangPage'
+import TabBar from '../components/TabBar/TabBar'
 import ScrollBar from '../components/TabBar/ScrollBar'
+import LangPage from './LangPage'
 
 const AnimatedPagerView = Animated.createAnimatedComponent<typeof PagerView>(PagerView)
 
