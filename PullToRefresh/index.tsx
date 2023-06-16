@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
 
 export default withNavigationItem({
   titleItem: {
-    title: 'PullToRresh',
+    title: 'PullToRefresh',
   },
+  topBarShadowHidden: true,
 })(PullToRefreshScreen)

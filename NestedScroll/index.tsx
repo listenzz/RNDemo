@@ -103,4 +103,5 @@ export default withNavigationItem({
   titleItem: {
     title: 'NestedScroll',
   },
+  topBarShadowHidden: true,
 })(NestedScrollPagerViewStickyHeader)
