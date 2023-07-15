@@ -17,7 +17,7 @@
     "@react-navigation/native-stack": "^6.9.9",
     "@sdcx/bottom-sheet": "^0.5.0",
     "@sdcx/keyboard-insets": "^0.1.0",
-    "@sdcx/nested-scroll": "^0.3.0",
+    "@sdcx/nested-scroll": "^0.4.0",
     "@sdcx/overlay": "^0.2.0",
     "@sdcx/pull-to-refresh": "^0.3.0",
     "@shopify/flash-list": "^1.4.2",
