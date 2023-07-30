@@ -55,9 +55,12 @@ public class MainApplication extends Application implements ReactApplication {
 		// 关闭隐私卫士安全安全模式
 		PrivacySentry.Privacy.INSTANCE.updatePrivacyShow();
 
-		// 加载 ReactNative
-		SoLoader.init(this, /* native exopackage */ false);
-		FLog.setMinimumLoggingLevel(FLog.INFO);
+		ReactNativeHost reactNativeHost = getReactNativeHost();
+		if (!reactNativeHost.hasInstance()) {
+			// 加载 ReactNative
+			SoLoader.init(this, /* native exopackage */ false);
+			FLog.setMinimumLoggingLevel(FLog.INFO);
+		}
 	}
 
 	private void setupPrivacySentry() {

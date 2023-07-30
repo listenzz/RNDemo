@@ -9,7 +9,6 @@ import androidx.core.view.WindowCompat;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactNativeHost;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 
 public class MainActivity extends ReactActivity implements PrivacyFragment.PrivacyFragmentListener{
@@ -95,11 +94,8 @@ public class MainActivity extends ReactActivity implements PrivacyFragment.Priva
 
     private void initReactNative() {
         // 如果还没有启动 RN
-        ReactNativeHost reactNativeHost = getReactNativeHost();
-        if (!reactNativeHost.hasInstance()) {
-            MainApplication application = (MainApplication) getApplication();
-            application.initReactNative();
-        }
+        MainApplication application = (MainApplication) getApplication();
+        application.initReactNative();
         loadApp("RNDemo");
     }
 

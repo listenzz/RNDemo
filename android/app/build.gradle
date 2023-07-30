@@ -81,6 +81,19 @@ dependencies {
 	// implementation "com.github.allenymt.PrivacySentry:privacy-replace:$privacyVersion"
 }
 
+privacy {
+	blackList = ["com.loc", "com.amap.api"]
+	replaceFileName = "replace.json"
+	// 开启 hook 反射
+	hookReflex = true
+	// debug 编译默认开启，支持关闭
+	debugEnable = true
+	// 开启 hook 替换类，目前支持 file
+	hookConstructor = true
+	// 是否开启 hook 变量，默认为 false
+	hookField = true
+}
+
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
