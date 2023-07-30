@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.WindowCompat;
 
 import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactNativeHost;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 
@@ -94,9 +95,12 @@ public class MainActivity extends ReactActivity implements PrivacyFragment.Priva
 
     private void initReactNative() {
         // 如果还没有启动 RN
-        if (getReactNativeHost().getReactInstanceManager().getCurrentReactContext() == null) {
-            loadApp("RNDemo");
+        ReactNativeHost reactNativeHost = getReactNativeHost();
+        if (!reactNativeHost.hasInstance()) {
+            MainApplication application = (MainApplication) getApplication();
+            application.initReactNative();
         }
+        loadApp("RNDemo");
     }
 
     private void showSplash(Bundle savedInstanceState) {
@@ -110,8 +114,8 @@ public class MainActivity extends ReactActivity implements PrivacyFragment.Priva
 
         // 当 Activity 销毁后重建，譬如旋转屏幕的时候，
         // 如果 React Native 已经启动完成，则不再显示闪屏
-        ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
-        if (splashFragment == null && reactContext == null) {
+        ReactNativeHost reactNativeHost = getReactNativeHost();
+        if (splashFragment == null && !reactNativeHost.hasInstance()) {
             splashFragment = new SplashFragment();
             splashFragment.show(getSupportFragmentManager(), SPLASH_TAG);
         }
