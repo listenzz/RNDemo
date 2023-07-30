@@ -32,9 +32,8 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
     }
 
     private void initReactNative() {
-        if (getCurrentReactContext() == null) {
-            ReactBridgeManager.get().initialize();
-        }
+        MainApplication application = MainApplication.get();
+        application.initReactNative();
     }
 
     private boolean checkPrivacyAgreement() {
@@ -110,7 +109,8 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
 
         // 当 Activity 销毁后重建，譬如旋转屏幕的时候，
         // 如果 React Native 已经启动完成，则不再显示闪屏
-        ReactContext reactContext = getCurrentReactContext();
+        ReactBridgeManager bridgeManager = getReactBridgeManager();
+        ReactContext reactContext = bridgeManager.getCurrentReactContext();
         if (reactContext == null) {
             splashFragment = new SplashFragment();
             showAsDialog(splashFragment, 0);
