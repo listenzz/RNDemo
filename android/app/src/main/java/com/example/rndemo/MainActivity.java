@@ -32,7 +32,7 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
     }
 
     private void initReactNative() {
-        MainApplication application = MainApplication.get();
+        MainApplication application = (MainApplication) getApplication();
         application.initReactNative();
     }
 

@@ -54,20 +54,9 @@ public class MainApplication extends Application implements ReactApplication {
 		setupPrivacySentry();
 	}
 
-    private static MainApplication mainApp;
-
-    public synchronized static void setInstance(MainApplication app) {
-        MainApplication.mainApp = app;
-    }
-
-    public synchronized static MainApplication get() {
-        return mainApp;
-    }
-
 	@Override
     public void onCreate() {
         super.onCreate();
-        setInstance(this);
     }
 
     public void initReactNative() {
@@ -75,10 +64,13 @@ public class MainApplication extends Application implements ReactApplication {
         PrivacySentry.Privacy.INSTANCE.updatePrivacyShow();
 
         // 加载 ReactNative
-        SoLoader.init(this, /* native exopackage */ false);
-        ReactBridgeManager bridgeManager = ReactBridgeManager.get();
-        bridgeManager.install(getReactNativeHost());
-        FLog.setMinimumLoggingLevel(FLog.INFO);
+        ReactNativeHost reactNativeHost = getReactNativeHost();
+        if (!reactNativeHost.hasInstance()) {
+            SoLoader.init(this, /* native exopackage */ false);
+            ReactBridgeManager bridgeManager = ReactBridgeManager.get();
+            bridgeManager.install(reactNativeHost);
+            FLog.setMinimumLoggingLevel(FLog.INFO);
+        }
     }
 
     private void setupPrivacySentry() {
