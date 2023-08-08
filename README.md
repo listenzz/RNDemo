@@ -16,4 +16,6 @@
 - [如何实现可复用的倒计时功能](https://todoit.tech/countdown.html)
 - [如何实现确认码控件](https://todoit.tech/confirmation-code.html)
 - [如何为 PagerView 自定义 TabBar](https://todoit.tech/tabbar.html)
-- [如何响应键盘开启和关闭](https://todoit.tech/keyboard-chat.html)
+- [如何避免键盘遮挡](https://github.com/sdcxtech/react-native-troika/blob/master/packages/keyboard-insets/README.md)
+- [如何实现嵌套滚动、自定义下拉刷新](https://todoit.tech/troika.html)
+- [如何实现头像裁剪](https://github.com/sdcxtech/react-native-troika/blob/master/packages/image-crop/README.md)
