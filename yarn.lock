@@ -1408,10 +1408,10 @@
   resolved "https://registry.yarnpkg.com/@sdcx/keyboard-insets/-/keyboard-insets-0.1.0.tgz#752de2cf2415146aac2e53e39116023ada102337"
   integrity sha512-qWIFJZYKw4ucPbqWWG1jFIquvOsaflPJejoRtfdATNwy0RGcCv1zsdHGAZy9XbDADvztNt9+IDSPdEs632xPag==
 
-"@sdcx/nested-scroll@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@sdcx/nested-scroll/-/nested-scroll-0.3.0.tgz#1b176519fc4376cc3f5a4b1bf4ffd2b3583cddb8"
-  integrity sha512-NmAyD6Vka0kr8AfmGr/a1c9Py9NrEfKiy1vCMrtIZ1TvbShTQwFJ2qEtZj0b/b40vzP7I+Xex3WAvORfnH0jvA==
+"@sdcx/nested-scroll@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@sdcx/nested-scroll/-/nested-scroll-0.8.0.tgz#3ffcfedace9f1014c48f82fc460d1a3f189d592e"
+  integrity sha512-QyhIu1dC5cJ+DBgvLsXhUh1C0u+OOrV0yEPazQMp1bsVrGY6KyVhuHcduOutEXaxZfu6lR4KqkVFgkRVD6JI4w==
 
 "@sdcx/overlay@^0.2.0":
   version "0.2.0"
