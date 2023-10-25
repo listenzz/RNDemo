@@ -12,11 +12,22 @@ target 'RnDemo' do
 end
 
 post_install do |installer|
-    react_native_post_install(installer)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
     installer.pods_project.targets.each do |target|
+        # https://github.com/facebook/react-native/issues/37748#issuecomment-1580589448
+        # https://github.com/facebook/react-native/issues/39069
         target.build_configurations.each do |config|
-            config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+            config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
+        end
+        case target.name
+          when 'RCT-Folly'
+            next
+          else
+            target.build_configurations.each do |config|
+                config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+                if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 12.4
+                    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.4'
+                end
+            end
         end
     end
 end
