@@ -1,9 +1,10 @@
+import { KeyboardInsetsView } from '@sdcx/keyboard-insets'
 import React from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { TextInput, StyleSheet } from 'react-native'
 
 export default function TextInputDemo() {
   return (
-    <View style={styles.container}>
+    <KeyboardInsetsView style={styles.container}>
       <TextInput
         style={styles.input}
         multiline
@@ -14,7 +15,7 @@ export default function TextInputDemo() {
         selectionColor={'#448AFF'}
         value="当将 multiline 设置为 true 时，在 iOS 上，文本会与顶部对齐，而在 Andriod 上，则保持垂直居中对齐。需要将 textAlignVertical 设置为 top，才能保持两个平台的表现一致。"
       />
-    </View>
+    </KeyboardInsetsView>
   )
 }
 
