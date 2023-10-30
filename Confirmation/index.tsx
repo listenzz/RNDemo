@@ -8,6 +8,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
+import { KeyboardInsetsView } from '@sdcx/keyboard-insets'
 
 const CELL_COUNT = 4
 
@@ -21,7 +22,7 @@ function Confirmation() {
   })
 
   return (
-    <View style={styles.container}>
+    <KeyboardInsetsView style={styles.container}>
       <Text style={styles.heading}>请输入你的验证码：</Text>
       <CodeInput style={styles.codeInput} value={value} onValueChange={setValue} />
 
@@ -46,7 +47,7 @@ function Confirmation() {
           </View>
         )}
       />
-    </View>
+    </KeyboardInsetsView>
   )
 }
 

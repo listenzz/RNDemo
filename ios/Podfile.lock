@@ -309,7 +309,7 @@ PODS:
     - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
-  - RNKeyboardInsets (0.4.0):
+  - RNKeyboardInsets (0.5.0):
     - React-Core
   - RNNestedScrollView (0.12.0):
     - React-Core
@@ -550,7 +550,7 @@ SPEC CHECKSUMS:
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFlashList: 7fbca4fc075484a9426f1610d648dbea2de94eb0
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
-  RNKeyboardInsets: 0e5e2e157f4d61df710116b2e1c89288b6c527d5
+  RNKeyboardInsets: 30e7b7492c1f3993e3602f27953ceb7e85ac5cbf
   RNNestedScrollView: 7c255f336ec92543cf46639ced3e3a98503b724d
   RNOverlay: adf004b9466f74f1ab617a9f8357b4d41e3f5927
   RNPullToRefresh: d5dbf60751ebe39fc2a23e0cac4e7700a2b16a70
