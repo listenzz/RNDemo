@@ -1507,10 +1507,10 @@
   resolved "https://registry.npmmirror.com/@sdcx/overlay/-/overlay-0.2.0.tgz#769c7a58826aea7fdaed164e39f4c9818a2fb02a"
   integrity sha512-7gLYNj0OHfnlZj2bY6+tqzV8GwHZviUshuLdjWeshcTutGXmSQJemsJHIVXdIlXWnEDebsg4L+OD9Vz5EhzqOw==
 
-"@sdcx/pull-to-refresh@^0.20.0":
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@sdcx/pull-to-refresh/-/pull-to-refresh-0.20.0.tgz#cce2b4f3d0b02baa4c67852a6428eb00b102aee9"
-  integrity sha512-W6SzLeyNOGA8/YWsvGrVNWxo7jkr9kpelttRQAB7dEcbwECTUagbK2zA4UNJZoeCnr2Gp5rn4yAje9zplfTscQ==
+"@sdcx/pull-to-refresh@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@sdcx/pull-to-refresh/-/pull-to-refresh-0.21.0.tgz#5635c0642dc23084b8ff6c36bc6b6d93e0da553b"
+  integrity sha512-QZZqtItw/lJdCe29roX6ahgC3i8pQRa+sRZ9aSvNHosYgozanuzB2Oq12wmyILxQio/SIr/eI+OQxmJhKmSk9g==
 
 "@shopify/flash-list@^1.4.2":
   version "1.4.2"

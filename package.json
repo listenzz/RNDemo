@@ -19,7 +19,7 @@
     "@sdcx/keyboard-insets": "^0.5.0",
     "@sdcx/nested-scroll": "^0.14.0",
     "@sdcx/overlay": "^0.2.0",
-    "@sdcx/pull-to-refresh": "^0.20.0",
+    "@sdcx/pull-to-refresh": "^0.21.0",
     "@shopify/flash-list": "^1.4.2",
     "lottie-react-native": "^5.1.5",
     "patch-package": "^6.4.7",
