@@ -1,6 +1,7 @@
 package com.example.rndemo;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -100,6 +101,13 @@ public class MainActivity extends ReactActivity implements PrivacyFragment.Priva
     }
 
     private void showSplash(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSplashScreen().setOnExitAnimationListener(view -> {
+                view.remove(); // 移除 fade 动画
+                getSplashScreen().clearOnExitAnimationListener();
+            });
+        }
+
         if (savedInstanceState != null) {
             splashFragment = (SplashFragment) getSupportFragmentManager()
                     .findFragmentByTag(SPLASH_TAG);
