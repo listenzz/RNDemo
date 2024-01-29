@@ -6,7 +6,7 @@
         </shape>
     </item>
 
-    <item android:bottom="60dp">
+    <item>
         <bitmap
             android:antialias="true"
             android:dither="true"

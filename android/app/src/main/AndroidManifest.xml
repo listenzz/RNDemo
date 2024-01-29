@@ -25,6 +25,7 @@
 		<activity
 			android:name=".MainActivity"
 			android:theme="@style/SplashTheme"
+			android:exported="true"
 			android:label="@string/app_name"
 			android:configChanges="keyboard|keyboardHidden|screenSize|uiMode"
 			android:launchMode="singleTask"

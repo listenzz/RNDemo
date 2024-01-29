@@ -1,6 +1,7 @@
 package com.example.rndemo;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -10,7 +11,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.navigation.androidx.AwesomeFragment;
 import com.reactnative.hybridnavigation.ReactAppCompatActivity;
-import com.reactnative.hybridnavigation.ReactBridgeManager;
 
 public class MainActivity extends ReactAppCompatActivity implements PrivacyFragment.PrivacyFragmentListener {
     @Override
@@ -93,6 +93,13 @@ public class MainActivity extends ReactAppCompatActivity implements PrivacyFragm
     private SplashFragment splashFragment;
 
     private void launchSplash(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSplashScreen().setOnExitAnimationListener(view -> {
+                view.remove();
+                getSplashScreen().clearOnExitAnimationListener();
+            });
+        }
+
         if (savedInstanceState != null) {
             String tag = savedInstanceState.getString("splash_tag");
             if (tag != null) {
