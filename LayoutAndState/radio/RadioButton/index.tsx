@@ -1,15 +1,15 @@
 import React from 'react'
 import { ViewStyle, StyleProp, StyleSheet, Text, Pressable } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Item, useRadioContext } from '../RadioContext'
+import { RadioButtonItem, useRadioButtonContext } from '../RadioButtonContext'
 
 interface RadioButtonProps<T> {
-  item: Item<T>
+  item: RadioButtonItem<T>
   style?: StyleProp<ViewStyle>
 }
 
 export default function RadioButton({ item, style }: RadioButtonProps<any>) {
-  const [checked, onPress] = useRadioContext(item)
+  const [checked, onPress] = useRadioButtonContext(item)
 
   return (
     <Pressable

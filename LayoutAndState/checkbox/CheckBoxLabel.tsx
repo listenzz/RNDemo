@@ -1,9 +1,9 @@
 import React from 'react'
 import { Text, StyleSheet, StyleProp, TextStyle, Pressable, ViewStyle } from 'react-native'
-import { Item, useCheckContext } from './CheckContext'
+import { CheckBoxItem, useCheckBoxContext } from './CheckBoxContext'
 
 interface CheckLabelProps<T> {
-  item: Item<T>
+  item: CheckBoxItem<T>
   style?: StyleProp<ViewStyle>
   checkedStyle?: StyleProp<ViewStyle>
   labelStyle?: StyleProp<TextStyle>
@@ -17,7 +17,7 @@ export default function CheckLabel({
   labelStyle,
   labelCheckedStyle,
 }: CheckLabelProps<any>) {
-  const [checked, onPress] = useCheckContext(item)
+  const [checked, onPress] = useCheckBoxContext(item)
 
   return (
     <Pressable

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { withNavigationItem } from 'hybrid-navigation'
-import CheckGroup from './checkbox/CheckGroup'
-import CheckLabel from './checkbox/CheckLabel'
+import CheckGroup from './checkbox/CheckBoxGroup'
+import CheckLabel from './checkbox/CheckBoxLabel'
 import GridView from './GridView'
 import CheckBox from './checkbox/CheckBox'
-import RadioGroup from './radio/RadioGroup'
+import RadioGroup from './radio/RadioButtonGroup'
 import RadioLabel from './radio/RadioLabel'
 import RadioButton from './radio/RadioButton'
+import { RadioButtonItem } from './radio/RadioButtonContext'
 
 interface Item {
   label: string
@@ -37,14 +38,14 @@ const companies = [
   { label: '外企', value: '外企' },
 ]
 
-const salaries = [
+const salaries: Array<RadioButtonItem<string | undefined>> = [
   { label: '10 - 15k', value: '15' },
   { label: '15 - 20k', value: '20' },
   { label: '20 - 25k', value: '25' },
   { label: '25 - 30k', value: '30' },
 ]
 
-const edus = [
+const edus: Array<RadioButtonItem<string | undefined>> = [
   { label: '大专', value: '大专' },
   { label: '本科', value: '本科' },
   { label: '研究生', value: '研究生' },
@@ -54,13 +55,13 @@ function LayoutAndState() {
   const [checkedLangs, setCheckedLangs] = useState<Item[]>([])
   const [checkedPlatforms, setCheckedPlatforms] = useState<Item[]>([])
   const [checkedCompanies, setCheckedCompanies] = useState<Item[]>([])
-  const [salary, setSalary] = useState<Item>()
-  const [education, setEducation] = useState<Item>()
+  const [salary, setSalary] = useState<RadioButtonItem<string | undefined>>()
+  const [education, setEducation] = useState<RadioButtonItem<string | undefined>>()
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>你擅长的语言（多选）</Text>
-      <CheckGroup checkedItems={checkedLangs} onCheckedItemsChanged={setCheckedLangs}>
+      <CheckGroup checkedItems={checkedLangs} onItemsChecked={setCheckedLangs}>
         <GridView style={styles.grid}>
           {langs.map(item => (
             <CheckLabel key={item.label} item={item} style={styles.gridItem} />
@@ -68,7 +69,7 @@ function LayoutAndState() {
         </GridView>
       </CheckGroup>
       <Text style={styles.header}>你擅长的平台（多选）</Text>
-      <CheckGroup checkedItems={checkedPlatforms} onCheckedItemsChanged={setCheckedPlatforms}>
+      <CheckGroup checkedItems={checkedPlatforms} onItemsChecked={setCheckedPlatforms}>
         <GridView style={styles.grid} numOfRow={2}>
           {platforms.map(item => (
             <CheckLabel key={item.label} item={item} style={styles.gridItem} />
@@ -76,7 +77,7 @@ function LayoutAndState() {
         </GridView>
       </CheckGroup>
       <Text style={styles.header}>你期望的公司（多选）</Text>
-      <CheckGroup checkedItems={checkedCompanies} onCheckedItemsChanged={setCheckedCompanies}>
+      <CheckGroup checkedItems={checkedCompanies} onItemsChecked={setCheckedCompanies}>
         <View style={styles.row}>
           {companies.map(item => (
             <CheckBox key={item.label} item={item} style={styles.rowItem} />

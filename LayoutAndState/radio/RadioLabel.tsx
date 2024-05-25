@@ -1,9 +1,9 @@
 import React from 'react'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from 'react-native'
-import { Item, useRadioContext } from './RadioContext'
+import { RadioButtonItem, useRadioButtonContext } from './RadioButtonContext'
 
 interface RadioLabelProps<T> {
-  item: Item<T>
+  item: RadioButtonItem<T>
   style?: StyleProp<TextStyle>
   checkedStyle?: StyleProp<TextStyle>
   labelStyle?: StyleProp<TextStyle>
@@ -17,7 +17,7 @@ export default function RadioLabel({
   labelStyle,
   labelCheckedStyle,
 }: RadioLabelProps<any>) {
-  const [checked, onPress] = useRadioContext(item)
+  const [checked, onPress] = useRadioButtonContext(item)
   return (
     <Pressable
       style={[styles.button, style, checked ? [styles.buttonChecked, checkedStyle] : undefined]}

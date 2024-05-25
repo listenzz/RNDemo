@@ -1,15 +1,15 @@
 import React from 'react'
 import { ViewStyle, StyleProp, StyleSheet, Text, Pressable } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Item, useCheckContext } from '../CheckContext'
+import { CheckBoxItem, useCheckBoxContext } from '../CheckBoxContext'
 
 interface CheckBoxProps<T> {
-  item: Item<T>
+  item: CheckBoxItem<T>
   style?: StyleProp<ViewStyle>
 }
 
 export default function CheckBox({ item, style }: CheckBoxProps<any>) {
-  const [checked, onPress] = useCheckContext(item)
+  const [checked, onPress] = useCheckBoxContext(item)
   return (
     <Pressable
       style={[styles.container, style]}
