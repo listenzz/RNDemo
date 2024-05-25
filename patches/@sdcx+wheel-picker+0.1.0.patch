@@ -1,0 +1,309 @@
+diff --git a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerView.java b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerView.java
+index 3ec75f5..73dc61f 100644
+--- a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerView.java
++++ b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerView.java
+@@ -65,6 +65,10 @@ public class PickerView extends FrameLayout implements WheelAdapter, OnItemSelec
+         wheelView.setTextSize(size);
+     }
+     
++    public void setItemHeight(float height) {
++        wheelView.setItemHeight(height);
++    }
++
+     public void setTextColorOut(int textColorOut) {
+         wheelView.setTextColorOut(textColorOut);
+     }
+diff --git a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerViewManager.java b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerViewManager.java
+index 4c7731e..35502a4 100644
+--- a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerViewManager.java
++++ b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/PickerViewManager.java
+@@ -6,6 +6,7 @@ import android.text.TextUtils;
+ 
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.common.MapBuilder;
++import com.facebook.react.uimanager.PixelUtil;
+ import com.facebook.react.uimanager.SimpleViewManager;
+ import com.facebook.react.uimanager.ThemedReactContext;
+ import com.facebook.react.uimanager.annotations.ReactProp;
+@@ -68,6 +69,11 @@ public class PickerViewManager extends SimpleViewManager<PickerView> {
+         pickerView.setTextSize(size);
+     }
+ 
++    @ReactProp(name = "itemHeight", defaultInt = 40)
++    public void setItemHeight(PickerView pickerView, int height) {
++        pickerView.setItemHeight(PixelUtil.toPixelFromDIP(height));
++    }
++    
+     @ReactProp(name = "textColorCenter")
+     public void setTextColorCenter(PickerView pickerView, String color) {
+         if (!TextUtils.isEmpty(color)) {
+diff --git a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/wheel/WheelView.java b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/wheel/WheelView.java
+index 3f6a9b2..2204acf 100644
+--- a/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/wheel/WheelView.java
++++ b/node_modules/@sdcx/wheel-picker/android/src/main/java/com/reactnative/wheelpicker/wheel/WheelView.java
+@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
+ public class WheelView extends View {
+ 
+     public enum ACTION { // 点击，滑翔(滑到尽头)，拖拽事件
+-        CLICK, FLING, DAGGLE
++        CLICK, FLING, DRAG
+     }
+ 
+     public enum RoundRectType { // 分隔线类型
+@@ -37,7 +37,7 @@ public class WheelView extends View {
+ 
+     private static final String[] TIME_NUM = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09"};
+ 
+-    private RoundRectType dividerType;//分隔线类型
++    private RoundRectType dividerType; //分隔线类型
+ 
+     private Context context;
+     private Handler handler;
+@@ -48,7 +48,7 @@ public class WheelView extends View {
+     private boolean isCenterLabel = true;
+ 
+     // Timer mTimer;
+-    private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
++    private final ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
+     private ScheduledFuture<?> mFuture;
+ 
+     private Paint paintOuterText;
+@@ -90,11 +90,9 @@ public class WheelView extends View {
+     //选中的Item是第几个
+     private int selectedItem;
+     private int preCurrentIndex;
+-    //滚动偏移值,用于记录滚动了多少个item
+-    private int change;
+ 
+     // 绘制几个条目，实际上第一项和最后一项Y轴压缩成0%了，所以可见的数目实际为9
+-    private int itemsVisible = 9;
++    private final int itemsVisible = 9;
+ 
+     private int measuredHeight;// WheelView 控件高度
+     private int measuredWidth;// WheelView 控件宽度
+@@ -229,22 +227,20 @@ public class WheelView extends View {
+     private void measureTextWidthHeight() {
+         Rect rect = new Rect();
+         for (int i = 0; i < adapter.getItemsCount(); i++) {
+-            String s1 = getContentText(adapter.getItem(i));
+-            paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
+-
++            String str = getContentText(adapter.getItem(i));
++            paintCenterText.getTextBounds(str, 0, str.length(), rect);
+             int textWidth = rect.width();
+             if (textWidth > maxTextWidth) {
+                 maxTextWidth = textWidth;
+             }
+         }
+-        paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
+-        maxTextHeight = rect.height() + 2;
+-        itemHeight = lineSpacingMultiplier * maxTextHeight;
++        maxTextHeight = (int) (rect.height() + (itemHeight - rect.height()) * 0.4);
++        // itemHeight = lineSpacingMultiplier * maxTextHeight;
+     }
+ 
+     public void smoothScroll(ACTION action) {//平滑滚动的实现
+         cancelFuture();
+-        if (action == ACTION.FLING || action == ACTION.DAGGLE) {
++        if (action == ACTION.FLING || action == ACTION.DRAG) {
+             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
+             if ((float) mOffset > itemHeight / 2.0F) {//如果超过Item高度的一半，滚动到下一个Item去
+                 mOffset = (int) (itemHeight - (float) mOffset);
+@@ -303,13 +299,13 @@ public class WheelView extends View {
+         this.onItemSelectedListener = OnItemSelectedListener;
+     }
+ 
+-    public final void setAdapter(WheelAdapter adapter) {
++    public final void setAdapter(WheelAdapter<?> adapter) {
+         this.adapter = adapter;
+         reMeasure();
+         invalidate();
+     }
+ 
+-    public final WheelAdapter getAdapter() {
++    public final WheelAdapter<?>  getAdapter() {
+         return adapter;
+     }
+ 
+@@ -347,7 +343,8 @@ public class WheelView extends View {
+         @SuppressLint("DrawAllocation")
+         Object visibles[] = new Object[itemsVisible];
+         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
+-        change = (int) (totalScrollY / itemHeight);
++        //滚动偏移值,用于记录滚动了多少个item
++        int change = (int) (totalScrollY / itemHeight);
+         // Log.d("change", "" + change);
+ 
+         try {
+@@ -395,30 +392,30 @@ public class WheelView extends View {
+         }
+ 
+         //绘制中间两条横线
+-        float r = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics());
+-        if (dividerType == RoundRectType.LEFT) {
+-            canvas.save();
+-            canvas.clipRect(0.0F, firstLineY, r, secondLineY);
+-            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
+-            canvas.restore();
+-            canvas.save();
+-            canvas.clipRect(r, firstLineY, measuredWidth, secondLineY);
+-            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
+-            canvas.restore();
+-        } else if (dividerType == RoundRectType.RIGHT) {
+-            canvas.save();
+-            canvas.clipRect(0.0F, firstLineY, measuredWidth - r, secondLineY);
+-            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
+-            canvas.restore();
+-            canvas.save();
+-            canvas.clipRect(measuredWidth - r, firstLineY, measuredWidth, secondLineY);
+-            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
+-            canvas.restore();
+-        } else if (dividerType == RoundRectType.ALL) {
+-            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
+-        } else {
+-            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
+-        }
++//        float r = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics());
++//        if (dividerType == RoundRectType.LEFT) {
++//            canvas.save();
++//            canvas.clipRect(0.0F, firstLineY, r, secondLineY);
++//            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
++//            canvas.restore();
++//            canvas.save();
++//            canvas.clipRect(r, firstLineY, measuredWidth, secondLineY);
++//            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
++//            canvas.restore();
++//        } else if (dividerType == RoundRectType.RIGHT) {
++//            canvas.save();
++//            canvas.clipRect(0.0F, firstLineY, measuredWidth - r, secondLineY);
++//            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
++//            canvas.restore();
++//            canvas.save();
++//            canvas.clipRect(measuredWidth - r, firstLineY, measuredWidth, secondLineY);
++//            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
++//            canvas.restore();
++//        } else if (dividerType == RoundRectType.ALL) {
++//            canvas.drawRoundRect(0.0F, firstLineY, measuredWidth, secondLineY, r, r, paintIndicator);
++//        } else {
++//            canvas.drawRect(0.0F, firstLineY, measuredWidth, secondLineY, paintIndicator);
++//        }
+ 
+         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
+         if (!TextUtils.isEmpty(label) && isCenterLabel) {
+@@ -470,14 +467,14 @@ public class WheelView extends View {
+                     canvas.restore();
+                     canvas.save();
+                     canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
+-                    canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
++                    canvas.scale(1.0F, (float) Math.sin(radian));
+                     canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                     canvas.restore();
+                 } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
+                     // 条目经过第二条线
+                     canvas.save();
+                     canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
+-                    canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
++                    canvas.scale(1.0F, (float) Math.sin(radian));
+                     canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                     canvas.restore();
+                     canvas.save();
+@@ -501,7 +498,7 @@ public class WheelView extends View {
+                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
+                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                     // 控制文字倾斜角度
+-                    paintOuterText.setTextSkewX((textXOffset == 0 ? 0 : (textXOffset > 0 ? 1 : -1)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEW_X * offsetCoefficient);
++                    paintOuterText.setTextSkewX((Integer.compare(textXOffset, 0)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEW_X * offsetCoefficient);
+                     // 控制透明度
+                     paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
+                     // 控制文字水平偏移距离
+@@ -678,7 +675,7 @@ public class WheelView extends View {
+ 
+                     if ((System.currentTimeMillis() - startTime) > 120) {
+                         // 处理拖拽事件
+-                        smoothScroll(ACTION.DAGGLE);
++                        smoothScroll(ACTION.DRAG);
+                     } else {
+                         // 处理条目点击事件
+                         smoothScroll(ACTION.CLICK);
+@@ -776,6 +773,12 @@ public class WheelView extends View {
+         return itemHeight;
+     }
+     
++    public void setItemHeight(float height) {
++        itemHeight = height;
++        reMeasure();
++        invalidate();
++    }
++
+     public int getInitPosition() {
+         return initPosition;
+     }
+diff --git a/node_modules/@sdcx/wheel-picker/lib/PickerAndroid.js b/node_modules/@sdcx/wheel-picker/lib/PickerAndroid.js
+index 5b61bc8..bbf234e 100644
+--- a/node_modules/@sdcx/wheel-picker/lib/PickerAndroid.js
++++ b/node_modules/@sdcx/wheel-picker/lib/PickerAndroid.js
+@@ -10,8 +10,9 @@ function PickerAndroid({ selectedValue, onValueChange, items = [], style, itemSt
+     }, [onValueChange, items]);
+     const selectedIndex = items.findIndex(v => v.value === selectedValue);
+     const s = StyleSheet.flatten(itemStyle);
++    const itemHeight = s.height ?? 40;
+     const fontSize = s.fontSize ?? 15;
+     const color = s.color && typeof s.color === 'string' ? s.color : undefined;
+-    return (<HBDPickerView onItemSelected={handleItemSelected} selectedIndex={selectedIndex === -1 ? 0 : selectedIndex} cyclic={false} items={items.map(item => item.label)} style={style} fontSize={fontSize} textColorCenter={color} lineSpacingMultiplier={(19 + fontSize) / fontSize} roundRectType={roundRectType}/>);
++    return (<HBDPickerView itemHeight={itemHeight} onItemSelected={handleItemSelected} selectedIndex={selectedIndex === -1 ? 0 : selectedIndex} cyclic={false} items={items.map(item => item.label)} style={style} fontSize={fontSize} textColorCenter={color} lineSpacingMultiplier={(19 + fontSize) / fontSize} roundRectType={roundRectType}/>);
+ }
+ export default PickerAndroid;
+diff --git a/node_modules/@sdcx/wheel-picker/lib/index.d.ts b/node_modules/@sdcx/wheel-picker/lib/index.d.ts
+index c132122..91c5c3d 100644
+--- a/node_modules/@sdcx/wheel-picker/lib/index.d.ts
++++ b/node_modules/@sdcx/wheel-picker/lib/index.d.ts
+@@ -4,8 +4,8 @@ export interface PickerItem {
+     label: string;
+ }
+ interface PickerProps {
+-    onValueChange?: (itemValue: string, itemIndex: number) => void;
+-    selectedValue: string;
++    onValueChange?: (itemValue: any, itemIndex: number) => void;
++    selectedValue: any;
+     items: PickerItem[];
+     style?: StyleProp<TextStyle>;
+     itemStyle?: StyleProp<TextStyle>;
+diff --git a/node_modules/@sdcx/wheel-picker/src/PickerAndroid.tsx b/node_modules/@sdcx/wheel-picker/src/PickerAndroid.tsx
+index 70ae1a7..ef5d847 100644
+--- a/node_modules/@sdcx/wheel-picker/src/PickerAndroid.tsx
++++ b/node_modules/@sdcx/wheel-picker/src/PickerAndroid.tsx
+@@ -8,6 +8,7 @@ interface HBDPickerViewProps extends ViewProps {
+   cyclic: boolean
+   items: string[]
+   fontSize: number
++  itemHeight: number
+   lineSpacingMultiplier: number
+   textColorCenter?: string
+   textColorOut?: string
+@@ -28,8 +29,8 @@ interface Item {
+ }
+ 
+ interface Props {
+-  onValueChange?: (itemValue: string, itemIndex: number) => void
+-  selectedValue: string
++  onValueChange?: (itemValue: any, itemIndex: number) => void
++  selectedValue: any
+   items: Item[]
+   style?: StyleProp<TextStyle>
+   itemStyle?: StyleProp<TextStyle>
+@@ -56,6 +57,7 @@ function PickerAndroid({
+ 
+   const selectedIndex = items.findIndex(v => v.value === selectedValue)
+   const s = StyleSheet.flatten(itemStyle)
++  const height = s.height && typeof s.height === 'number'  ? s.height : 40
+   const fontSize = s.fontSize ?? 15
+   const color = s.color && typeof s.color === 'string' ? s.color : undefined
+ 
+@@ -68,6 +70,7 @@ function PickerAndroid({
+       style={style}
+       fontSize={fontSize}
+       textColorCenter={color}
++      itemHeight={height}
+       lineSpacingMultiplier={(19 + fontSize) / fontSize}
+       roundRectType={roundRectType}
+     />

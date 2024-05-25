@@ -1423,6 +1423,11 @@
   resolved "https://registry.yarnpkg.com/@sdcx/pull-to-refresh/-/pull-to-refresh-0.21.0.tgz#5635c0642dc23084b8ff6c36bc6b6d93e0da553b"
   integrity sha512-QZZqtItw/lJdCe29roX6ahgC3i8pQRa+sRZ9aSvNHosYgozanuzB2Oq12wmyILxQio/SIr/eI+OQxmJhKmSk9g==
 
+"@sdcx/wheel-picker@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmmirror.com/@sdcx/wheel-picker/-/wheel-picker-0.1.0.tgz#4501e0a130f3e302aff3be4d1d186a3447a7b6a6"
+  integrity sha512-+EQC4XjOf20C+1CIEpcm8Ng4gSp7AVp9AdvxwCCIEri5fnYbs16/ZE/3mReBHQ2xOVDwxdAL8KXhjI4w7VGxLw==
+
 "@shopify/flash-list@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.4.2.tgz#86c188f42fcb4bb2a569c0354978e9148a83d1f3"

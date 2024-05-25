@@ -18,6 +18,7 @@
     "@sdcx/nested-scroll": "^0.14.0",
     "@sdcx/overlay": "^0.2.0",
     "@sdcx/pull-to-refresh": "^0.21.0",
+    "@sdcx/wheel-picker": "^0.1.0",
     "@shopify/flash-list": "^1.4.2",
     "hybrid-navigation": "^2.16.7",
     "lottie-react-native": "^5.1.5",
