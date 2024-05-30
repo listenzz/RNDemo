@@ -1,0 +1,112 @@
+diff --git a/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheet.java b/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheet.java
+index 5ea1357..ee339c6 100644
+--- a/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheet.java
++++ b/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheet.java
+@@ -55,6 +55,8 @@ public class BottomSheet extends ReactViewGroup implements NestedScrollingParent
+ 
+     private SettleRunnable settleRunnable = null;
+     
++    private boolean draggable;
++
+     private int peekHeight;
+ 
+     private int expandedOffset;
+@@ -156,6 +158,10 @@ public class BottomSheet extends ReactViewGroup implements NestedScrollingParent
+         }
+     }
+ 
++    public void setDraggable(boolean draggable) {
++        this.draggable = draggable;
++    }
++
+     public void setState(BottomSheetState state) {
+         if (state == this.state) {
+             return;
+@@ -211,6 +217,9 @@ public class BottomSheet extends ReactViewGroup implements NestedScrollingParent
+     }
+ 
+     private boolean shouldInterceptTouchEvent(MotionEvent event) {
++        if (!draggable) {
++            return false;
++        }
+         int action = event.getActionMasked();
+         // Record the velocity
+         if (action == MotionEvent.ACTION_DOWN) {
+@@ -270,6 +279,10 @@ public class BottomSheet extends ReactViewGroup implements NestedScrollingParent
+ 
+     @Override
+     public boolean onTouchEvent(MotionEvent event) {
++        if (!draggable) {
++            return false;
++        }
++        
+         int action = event.getActionMasked();
+         if (state == DRAGGING && action == MotionEvent.ACTION_DOWN) {
+             return true;
+diff --git a/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheetManager.java b/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheetManager.java
+index 98d4c21..dd91738 100644
+--- a/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheetManager.java
++++ b/node_modules/@sdcx/bottom-sheet/android/src/main/java/com/reactnative/bottomsheet/BottomSheetManager.java
+@@ -42,4 +42,9 @@ public class BottomSheetManager extends ViewGroupManager<BottomSheet> {
+         view.setState(BottomSheetState.valueOf(state.toUpperCase()));
+     }
+     
++    @ReactProp(name = "draggable")
++    public void setDraggable(BottomSheet view, boolean draggable) {
++        view.setDraggable(draggable);
++    }
++
+ }
+diff --git a/node_modules/@sdcx/bottom-sheet/lib/index.d.ts b/node_modules/@sdcx/bottom-sheet/lib/index.d.ts
+index cdceae2..bd872d3 100644
+--- a/node_modules/@sdcx/bottom-sheet/lib/index.d.ts
++++ b/node_modules/@sdcx/bottom-sheet/lib/index.d.ts
+@@ -13,6 +13,7 @@ export interface StateChangedEventData {
+ interface NativeBottomSheetProps extends ViewProps {
+     onSlide?: (event: NativeSyntheticEvent<OffsetChangedEventData>) => void;
+     onStateChanged?: (event: NativeSyntheticEvent<StateChangedEventData>) => void;
++    draggable?: boolean
+     peekHeight?: number;
+     state?: BottomSheetState;
+     contentContainerStyle?: ViewProps['style'];
+diff --git a/node_modules/@sdcx/bottom-sheet/lib/index.js b/node_modules/@sdcx/bottom-sheet/lib/index.js
+index a25d5a2..79ff275 100644
+--- a/node_modules/@sdcx/bottom-sheet/lib/index.js
++++ b/node_modules/@sdcx/bottom-sheet/lib/index.js
+@@ -3,7 +3,7 @@ import { requireNativeComponent, StyleSheet, View } from 'react-native';
+ import splitLayoutProps from './splitLayoutProps';
+ const NativeBottomSheet = requireNativeComponent('BottomSheet');
+ const BottomSheet = React.forwardRef((props, ref) => {
+-    const { style, contentContainerStyle, children, peekHeight = 200, state = 'collapsed', fitToContents, ...rest } = props;
++    const { style, contentContainerStyle, children, draggable=true, peekHeight = 200, state = 'collapsed', fitToContents, ...rest } = props;
+     const { outer, inner } = splitLayoutProps(StyleSheet.flatten(style));
+     return (<NativeBottomSheet style={[StyleSheet.absoluteFill, outer]} peekHeight={peekHeight} state={state} {...rest} ref={ref}>
+       <View style={[fitToContents ? styles.fitToContents : StyleSheet.absoluteFill, inner, contentContainerStyle]} collapsable={false}>
+diff --git a/node_modules/@sdcx/bottom-sheet/src/index.tsx b/node_modules/@sdcx/bottom-sheet/src/index.tsx
+index 76b0553..8bc3347 100644
+--- a/node_modules/@sdcx/bottom-sheet/src/index.tsx
++++ b/node_modules/@sdcx/bottom-sheet/src/index.tsx
+@@ -19,6 +19,7 @@ interface NativeBottomSheetProps extends ViewProps {
+   onSlide?: (event: NativeSyntheticEvent<OffsetChangedEventData>) => void
+   onStateChanged?: (event: NativeSyntheticEvent<StateChangedEventData>) => void
+   peekHeight?: number
++  draggable?: boolean
+   state?: BottomSheetState
+   contentContainerStyle?: ViewProps['style']
+ }
+@@ -37,6 +38,7 @@ const BottomSheet = React.forwardRef<NativeBottomSheetInstance, BottomSheetProps
+     contentContainerStyle,
+     children,
+     peekHeight = 200,
++    draggable = true,
+     state = 'collapsed',
+     fitToContents,
+     ...rest
+@@ -46,6 +48,7 @@ const BottomSheet = React.forwardRef<NativeBottomSheetInstance, BottomSheetProps
+     <NativeBottomSheet
+       style={[StyleSheet.absoluteFill, outer]}
+       peekHeight={peekHeight}
++      draggable={draggable}
+       state={state}
+       {...rest}
+       ref={ref}>
