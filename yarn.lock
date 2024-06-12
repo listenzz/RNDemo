@@ -1398,10 +1398,10 @@
   resolved "https://registry.npmmirror.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
-"@sdcx/bottom-sheet@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@sdcx/bottom-sheet/-/bottom-sheet-0.12.0.tgz#3db744ea6f55c41c3bb103da417831f76e266229"
-  integrity sha512-zyLGmbdyYnxfzrX6j06EoqloJzml3ucJKXAWT1rWZv3nglI90HIAZfvvWDNHNIVXvVEhlq7SKn3MiUy4bz1cIw==
+"@sdcx/bottom-sheet@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@sdcx/bottom-sheet/-/bottom-sheet-0.13.0.tgz#eadf32638f2950bc3313b7d1447a31540917c809"
+  integrity sha512-Wc0L6abU93l+tuwDId3Is0T8Zi86hEqM6h5bN3OajIcZ09NJBlulhfH8K/h+7PjM8vD/OxkPcAineWUR2n2rQQ==
 
 "@sdcx/keyboard-insets@^0.5.0":
   version "0.5.0"
