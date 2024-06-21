@@ -1,0 +1,67 @@
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.h b/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.h
+new file mode 100644
+index 0000000..92cb5b1
+--- /dev/null
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.h
+@@ -0,0 +1,9 @@
++#import <UIKit/UIKit.h>
++
++NS_ASSUME_NONNULL_BEGIN
++
++@interface HBDBackBarButtonItem : UIBarButtonItem
++
++@end
++
++NS_ASSUME_NONNULL_END
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.m b/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.m
+new file mode 100644
+index 0000000..7da10b2
+--- /dev/null
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/View/HBDBackBarButtonItem.m
+@@ -0,0 +1,13 @@
++#import "HBDBackBarButtonItem.h"
++
++@implementation HBDBackBarButtonItem
++
++- (void)setMenu:(UIMenu *)menu {
++    //
++}
++
++- (UIMenu *)menu {
++    return [super menu];
++}
++
++@end
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
+index 5b6be3c..07de83d 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
+@@ -4,6 +4,7 @@
+ #import "HBDUtils.h"
+ #import "HBDAnimationObserver.h"
+ #import "GlobalStyle.h"
++#import "HBDBackBarButtonItem.h"
+ 
+ #import <React/RCTLog.h>
+ 
+@@ -205,17 +206,16 @@
+     }
+ 
+     if ([GlobalStyle globalStyle].isBackTitleHidden) {
++        UIBarButtonItem *buttonItem = [[HBDBackBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:NULL];
++        self.navigationItem.backBarButtonItem = buttonItem;
+         if (@available(iOS 14.0, *)) {
+             self.navigationItem.backButtonDisplayMode = UINavigationItemBackButtonDisplayModeMinimal;
+-        } else {
+-            UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:NULL];
+-            self.navigationItem.backBarButtonItem = buttonItem;
+         }
+     }
+ 
+     NSDictionary *backItem = options[@"backItemIOS"];
+     if (backItem) {
+-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
++        UIBarButtonItem *backButton = [[HBDBackBarButtonItem alloc] init];
+         backButton.title = backItem[@"title"];
+         NSString *tintColor = backItem[@"tintColor"];
+         if (tintColor) {
