@@ -1,0 +1,298 @@
+diff --git a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java
+index a2bd969..1288f63 100644
+--- a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java
++++ b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java
+@@ -5,6 +5,7 @@ import static com.reactnative.hybridnavigation.Constants.ARG_OPTIONS;
+ import static com.reactnative.hybridnavigation.Constants.ARG_PROPS;
+ import static com.reactnative.hybridnavigation.Constants.ARG_SCENE_ID;
+ 
++import android.content.pm.ActivityInfo;
+ import android.graphics.Color;
+ import android.os.Bundle;
+ import android.view.View;
+@@ -99,6 +100,22 @@ public class HybridFragment extends AwesomeFragment {
+         garden.setupToolbar();
+     }
+     
++    @Override
++    public void onStart() {
++        super.onStart();
++        if (forceScreenLandscape()) {
++            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
++        }
++    }
++
++    @Override
++    public void onStop() {
++        super.onStop();
++        if (forceScreenLandscape() && isRemoving()) {
++            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
++        }
++    }
++
+     @NonNull
+     @Override
+     protected BarStyle preferredStatusBarStyle() {
+@@ -180,6 +197,16 @@ public class HybridFragment extends AwesomeFragment {
+         return options.getBoolean("passThroughTouches");
+     }
+ 
++    protected boolean shouldAnimatedTransition() {
++        Bundle options = getOptions();
++        return options.getBoolean("animatedTransition", true);
++    }
++
++    protected boolean forceScreenLandscape() {
++        Bundle options = getOptions();
++        return options.getBoolean("forceScreenLandscape", false);
++    }
++
+     protected boolean forceTransparentDialogWindow() {
+         return garden.forceTransparentDialogWindow;
+     }
+diff --git a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
+index 073125f..55c5d7e 100644
+--- a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
++++ b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
+@@ -42,6 +42,11 @@ public class ReactStackFragment extends StackFragment {
+     protected void pushFragmentSync(AwesomeFragment fragment, @NonNull Runnable completion, @NonNull TransitionAnimation animation) {
+         if (fragment instanceof ReactFragment) {
+             ReactFragment reactFragment = (ReactFragment) fragment;
++            if (!reactFragment.shouldAnimatedTransition()) {
++                super.pushFragmentSync(fragment, completion, TransitionAnimation.None);
++                return;
++            }
++
+             if (reactFragment.shouldPassThroughTouches()) {
+                 super.pushFragmentSync(fragment, completion, BetterPush);
+                 return;
+@@ -55,6 +60,11 @@ public class ReactStackFragment extends StackFragment {
+         AwesomeFragment topFragment = getTopFragment();
+         if (topFragment instanceof ReactFragment) {
+             ReactFragment reactFragment = (ReactFragment) topFragment;
++            if (!reactFragment.shouldAnimatedTransition()) {
++                super.popToFragmentSync(fragment, completion, TransitionAnimation.None);
++                return;
++            }
++
+             if (reactFragment.shouldPassThroughTouches()) {
+                 super.popToFragmentSync(fragment, completion, BetterPush);
+                 return;
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h b/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h
+index 1d0b22a..f9d98d5 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h
+@@ -15,6 +15,7 @@
+ @property(nonatomic, copy) NSString *tabBarUnselectedItemColorHexString;
+ @property(nonatomic, strong, readonly) UIColor *tabBarBackgroundColor;
+ @property(nonatomic, assign, readonly) BOOL alwaysSplitNavigationBarTransition;
++@property(nonatomic, assign) UIInterfaceOrientationMask interfaceOrientation;
+ 
+ - (instancetype)initWithOptions:(NSDictionary *)options;
+ 
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.m b/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.m
+index ab76d44..2f9f250 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.m
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.m
+@@ -57,6 +57,7 @@ static GlobalStyle *globalStyle;
+ - (instancetype)initWithOptions:(NSDictionary *)options {
+     if (self = [super init]) {
+         _options = options;
++        _interfaceOrientation = UIInterfaceOrientationMaskPortrait;
+ 
+         // screenBackgroundColor
+         NSString *screenBackgroundColor = options[@"screenBackgroundColor"];
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/HybridNavigation.h b/node_modules/hybrid-navigation/ios/HybridNavigation/HybridNavigation.h
+index 04ee600..6abad1a 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/HybridNavigation.h
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/HybridNavigation.h
+@@ -19,5 +19,6 @@
+ #import "HBDDrawerNavigator.h"
+ 
+ #import "HBDUtils.h"
++#import "GlobalStyle.h"
+ 
+ #endif /* HybridNavigation_h */
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m b/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
+index 6fc2d8a..fa685f8 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
+@@ -88,7 +88,7 @@
+     }
+     
+     if ([action isEqualToString:@"pop"]) {
+-        [self handlePopWithNavigationController:nav callback:callback];
++        [self handlePopWithNavigationController:nav viewController:vc callback:callback];
+         return;
+     }
+     
+@@ -121,14 +121,37 @@
+     }
+ 
+     vc.hidesBottomBarWhenPushed = nav.hidesBottomBarWhenPushed;
+-    [[HBDAnimationObserver sharedObserver] beginAnimation];
+-    [nav pushViewController:vc animated:YES];
+-    [self animateAlongsideTransition:nav callback:callback];
++    
++    BOOL animated = YES;
++    if ([vc isKindOfClass:[HBDViewController class]]) {
++        HBDViewController *hdbvc = (HBDViewController *)vc;
++        animated = hdbvc.animatedTransition;
++    }
++    
++    if (animated) {
++        [[HBDAnimationObserver sharedObserver] beginAnimation];
++        [nav pushViewController:vc animated:YES];
++        [self animateAlongsideTransition:nav callback:callback];
++    } else {
++        [nav pushViewController:vc animated:NO];
++        callback(@[NSNull.null, @YES]);
++    }
+ }
+ 
+-- (void)handlePopWithNavigationController:(UINavigationController *)nav callback:(RCTResponseSenderBlock)callback {
+-    [nav popViewControllerAnimated:YES];
+-    [self animateAlongsideTransition:nav callback:callback];
++- (void)handlePopWithNavigationController:(UINavigationController *)nav viewController:(UIViewController *)vc callback:(RCTResponseSenderBlock)callback {
++    BOOL animated = YES;
++    if ([vc isKindOfClass:[HBDViewController class]]) {
++        HBDViewController *hdbvc = (HBDViewController *)vc;
++        animated = hdbvc.animatedTransition;
++    }
++    
++    if (animated) {
++        [nav popViewControllerAnimated:YES];
++        [self animateAlongsideTransition:nav callback:callback];
++    } else {
++        [nav popViewControllerAnimated:NO];
++        callback(@[NSNull.null, @YES]);
++    }
+ }
+ 
+ - (void)handlePopToWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras callback:(RCTResponseSenderBlock)callback {
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h
+index 66fdc1f..0280cfe 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h
+@@ -7,6 +7,7 @@
+ @property(nonatomic, copy, readonly) NSString *moduleName;
+ @property(nonatomic, copy, readonly) NSDictionary *props;
+ @property(nonatomic, copy, readonly) NSDictionary *options;
++@property(nonatomic, assign, readonly) BOOL animatedTransition;
+ 
+ - (instancetype)initWithModuleName:(NSString *)moduleName props:(NSDictionary *)props options:(NSDictionary *)options NS_DESIGNATED_INITIALIZER;
+ 
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
+index 07de83d..c3b0957 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.m
+@@ -13,6 +13,8 @@
+ @property(nonatomic, copy, readwrite) NSDictionary *props;
+ @property(nonatomic, copy, readwrite) NSDictionary *options;
+ @property(nonatomic, assign) BOOL forceTransparentDialogWindow;
++@property(nonatomic, assign) BOOL forceScreenLandscape;
++@property(nonatomic, assign, readwrite) BOOL animatedTransition;
+ 
+ @end
+ 
+@@ -35,8 +37,18 @@
+         _moduleName = moduleName;
+         _options = options;
+         _props = props;
++        _animatedTransition = YES;
++        
++        if (options[@"animatedTransition"]) {
++            _animatedTransition = [options[@"animatedTransition"] boolValue];
++        }
++        
++        if (options[@"forceScreenLandscape"]) {
++            _forceScreenLandscape = [options[@"forceScreenLandscape"] boolValue];
++        }
+         
+         self.forceTransparentDialogWindow = [options[@"forceTransparentDialogWindow"] boolValue];
++        
+         [self applyNavigationBarOptions:options];
+         [self applyTabBarOptions:options];
+     }
+@@ -96,6 +108,50 @@
+     }
+ }
+ 
++- (void)willMoveToParentViewController:(UIViewController *)parent {
++    if (self.forceScreenLandscape) {
++        if (parent) {
++            [self setScreenOrientation:UIInterfaceOrientationLandscapeRight usingMask:UIInterfaceOrientationMaskLandscapeRight];
++        } else {
++            [self setScreenOrientation:UIInterfaceOrientationPortrait usingMask:UIInterfaceOrientationMaskPortrait];
++        }
++    }
++}
++
++- (void)setScreenOrientation:(UIInterfaceOrientation) orientation usingMask:(UIInterfaceOrientationMask) mask {
++    [GlobalStyle globalStyle].interfaceOrientation = mask;
++    
++    if (@available(iOS 16.0, *)) {
++            UIWindowScene *windowScene = [self getWindowScene];
++            if (windowScene != nil) {
++                UIWindowSceneGeometryPreferencesIOS *geometryPreferences = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:mask];
++                [windowScene requestGeometryUpdateWithPreferences:geometryPreferences errorHandler:^(NSError * _Nonnull error) {
++    #if DEBUG
++                    if (error) {
++                        NSLog(@"Failed to update geometry with UIInterfaceOrientationMask: %@", error);
++                    }
++    #endif
++                }];
++            }
++    }  else {
++        UIDevice* currentDevice = [UIDevice currentDevice];
++        [currentDevice setValue:@(UIInterfaceOrientationUnknown) forKey:@"orientation"];
++        [currentDevice setValue:@(orientation) forKey:@"orientation"];
++    }
++    
++    [UIViewController attemptRotationToDeviceOrientation];
++}
++
++- (UIWindowScene *)getWindowScene  API_AVAILABLE(ios(13.0)){
++    NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
++    for (id connectedScene in array) {
++      if ([connectedScene isKindOfClass:[UIWindowScene class]]) {
++        return connectedScene;
++      }
++    }
++    return nil;
++}
++
+ - (void)statusBarFrameWillChange:(NSNotification *)notification {
+     [self setNeedsStatusBarAppearanceUpdate];
+ }
+diff --git a/node_modules/hybrid-navigation/lib/Options.d.ts b/node_modules/hybrid-navigation/lib/Options.d.ts
+index 436376d..6e63520 100644
+--- a/node_modules/hybrid-navigation/lib/Options.d.ts
++++ b/node_modules/hybrid-navigation/lib/Options.d.ts
+@@ -44,9 +44,13 @@ export interface NavigationOption {
+ export interface NavigationItem extends NavigationOption {
+     passThroughTouches?: boolean;
+     forceTransparentDialogWindow?: boolean;
++    forceScreenLandscape: boolean;
++    animatedTransition: boolean;
+     topBarHidden?: boolean;
+     extendedLayoutIncludesTopBar?: boolean;
+     swipeBackEnabled?: boolean;
++    forceScreenLandscape?: boolean;
++    animatedTransition?: boolean;
+     titleItem?: TitleItem;
+     leftBarButtonItem?: BarButtonItem;
+     rightBarButtonItem?: BarButtonItem;
+diff --git a/node_modules/hybrid-navigation/src/Options.ts b/node_modules/hybrid-navigation/src/Options.ts
+index d497a40..5ec92cc 100644
+--- a/node_modules/hybrid-navigation/src/Options.ts
++++ b/node_modules/hybrid-navigation/src/Options.ts
+@@ -48,6 +48,8 @@ export interface NavigationItem extends NavigationOption {
+   topBarHidden?: boolean // 是否隐藏 TopBar
+   extendedLayoutIncludesTopBar?: boolean // 页面内容是否延伸到 TopBar 底下，通常用于需要动态改变 `topBarAlpha` 的场合
+   swipeBackEnabled?: boolean // 是否可以通过右滑返回。如果 `backInteractive` 设置为 false, 那么该值无效。Android 下，只有开启了侧滑返回功能，该值才会生效。
++  animatedTransition?: boolean
++  forceScreenLandscape?: boolean // 是否强制横屏
+   titleItem?: TitleItem
+   leftBarButtonItem?: BarButtonItem
+   rightBarButtonItem?: BarButtonItem
