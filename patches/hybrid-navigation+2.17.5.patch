@@ -1,3 +1,6 @@
+diff --git a/node_modules/hybrid-navigation/.DS_Store b/node_modules/hybrid-navigation/.DS_Store
+new file mode 100644
+index 0000000..e69de29
 diff --git a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java
 index a2bd969..1288f63 100644
 --- a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/HybridFragment.java
@@ -51,7 +54,7 @@ index a2bd969..1288f63 100644
          return garden.forceTransparentDialogWindow;
      }
 diff --git a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
-index 073125f..55c5d7e 100644
+index 073125f..7fbc825 100644
 --- a/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
 +++ b/node_modules/hybrid-navigation/android/src/main/java/com/reactnative/hybridnavigation/ReactStackFragment.java
 @@ -42,6 +42,11 @@ public class ReactStackFragment extends StackFragment {
@@ -78,6 +81,44 @@ index 073125f..55c5d7e 100644
              if (reactFragment.shouldPassThroughTouches()) {
                  super.popToFragmentSync(fragment, completion, BetterPush);
                  return;
+@@ -67,6 +77,11 @@ public class ReactStackFragment extends StackFragment {
+     protected void redirectToFragmentSync(@NonNull AwesomeFragment fragment, @NonNull Runnable completion, @NonNull TransitionAnimation animation, @Nullable AwesomeFragment from) {
+         if (fragment instanceof ReactFragment) {
+             ReactFragment reactFragment = (ReactFragment) fragment;
++            if (!reactFragment.shouldAnimatedTransition()) {
++                super.redirectToFragmentSync(fragment, completion, TransitionAnimation.None, from);
++                return;
++            }
++            
+             if (reactFragment.shouldPassThroughTouches()) {
+                 super.redirectToFragmentSync(fragment, completion, BetterRedirect, from);
+                 return;
+diff --git a/node_modules/hybrid-navigation/ios/.DS_Store b/node_modules/hybrid-navigation/ios/.DS_Store
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation.xcodeproj/project.xcworkspace/xcuserdata/ld.xcuserdatad/UserInterfaceState.xcuserstate b/node_modules/hybrid-navigation/ios/HybridNavigation.xcodeproj/project.xcworkspace/xcuserdata/ld.xcuserdatad/UserInterfaceState.xcuserstate
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation.xcodeproj/xcuserdata/ld.xcuserdatad/xcschemes/xcschememanagement.plist b/node_modules/hybrid-navigation/ios/HybridNavigation.xcodeproj/xcuserdata/ld.xcuserdatad/xcschemes/xcschememanagement.plist
+new file mode 100644
+index 0000000..6dedb3f
+--- /dev/null
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation.xcodeproj/xcuserdata/ld.xcuserdatad/xcschemes/xcschememanagement.plist
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++	<key>SchemeUserState</key>
++	<dict>
++		<key>HybridNavigation.xcscheme_^#shared#^_</key>
++		<dict>
++			<key>orderHint</key>
++			<integer>0</integer>
++		</dict>
++	</dict>
++</dict>
++</plist>
 diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h b/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h
 index 1d0b22a..f9d98d5 100644
 --- a/node_modules/hybrid-navigation/ios/HybridNavigation/GlobalStyle.h
@@ -114,7 +155,7 @@ index 04ee600..6abad1a 100644
  
  #endif /* HybridNavigation_h */
 diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m b/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
-index 6fc2d8a..fa685f8 100644
+index 6fc2d8a..4136efe 100644
 --- a/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
 +++ b/node_modules/hybrid-navigation/ios/HybridNavigation/Navigator/HBDStackNavigator.m
 @@ -88,7 +88,7 @@
@@ -170,6 +211,102 @@ index 6fc2d8a..fa685f8 100644
  }
  
  - (void)handlePopToWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras callback:(RCTResponseSenderBlock)callback {
+@@ -138,8 +161,41 @@
+         return;
+     }
+     
+-    [nav popToViewController:vc animated:YES];
+-    [self animateAlongsideTransition:nav callback:callback];
++    UIViewController *from_vc = [self findFromViewControllerWithNavigationController:nav extras:extras];
++    
++    BOOL animated = YES;
++    if ([from_vc isKindOfClass:[HBDViewController class]]) {
++        HBDViewController *hbdvc = (HBDViewController *)from_vc;
++        animated = hbdvc.animatedTransition;
++    }
++    
++    if (animated) {
++        [nav popToViewController:vc animated:YES];
++        [self animateAlongsideTransition:nav callback:callback];
++    }else {
++        [nav popToViewController:vc animated:NO];
++        callback(@[NSNull.null, @YES]);
++    }
++    
++}
++
++- (UIViewController *)findFromViewControllerWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras {
++    NSArray *children = nav.childViewControllers;
++    NSString *moduleName = extras[@"from"];
++    BOOL inclusive = [extras[@"inclusive"] boolValue];
++    
++    for (NSUInteger i = children.count; i > 0; i--) {
++        NSUInteger index = i - 1;
++        HBDViewController *vc = children[index];
++        if ([moduleName isEqualToString:vc.moduleName] || [moduleName isEqualToString:vc.sceneId]) {
++            if (inclusive && index > 0) {
++                return children[index - 1];
++            }
++            return vc;
++        }
++    }
++    
++    return nil;
+ }
+ 
+ - (UIViewController *)findViewControllerWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras {
+@@ -162,8 +218,23 @@
+ }
+ 
+ - (void)handlePopToRootWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras callback:(RCTResponseSenderBlock)callback {
+-    [nav popToRootViewControllerAnimated:YES];
+-    [self animateAlongsideTransition:nav callback:callback];
++    
++    UIViewController *from_vc = [self findFromViewControllerWithNavigationController:nav extras:extras];
++    
++    BOOL animated = YES;
++    
++    if ([from_vc isKindOfClass:[HBDViewController class]]) {
++        HBDViewController *hbdvc = (HBDViewController *)from_vc;
++        animated = hbdvc.animatedTransition;
++    }
++    
++    if (animated) {
++        [nav popToRootViewControllerAnimated:YES];
++        [self animateAlongsideTransition:nav callback:callback];
++    }else {
++        [nav popToRootViewControllerAnimated:NO];
++        callback(@[NSNull.null, @YES]);
++    }
+ }
+ 
+ - (void)handleRedirectToWithNavigationController:(UINavigationController *)nav target:(UIViewController *)target extras:(NSDictionary *)extras callback:(RCTResponseSenderBlock)callback {
+@@ -177,10 +248,22 @@
+         callback(@[NSNull.null, @NO]);
+         return;
+     }
++    BOOL animated = YES;
++    
++    if ([vc isKindOfClass:[HBDViewController class]]) {
++        HBDViewController *hbdvc = (HBDViewController *)vc;
++        animated = hbdvc.animatedTransition;
++    }
++    
++    if (animated) {
++        [[HBDAnimationObserver sharedObserver] beginAnimation];
++        [nav redirectToViewController:vc target:target animated:YES];
++        [self animateAlongsideTransition:nav callback:callback];
++    }else {
++        [nav redirectToViewController:vc target:target animated:NO];
++        callback(@[NSNull.null, @YES]);
++    }
+     
+-    [[HBDAnimationObserver sharedObserver] beginAnimation];
+-    [nav redirectToViewController:vc target:target animated:YES];
+-    [self animateAlongsideTransition:nav callback:callback];
+ }
+ 
+ - (void)handlePushLayoutWithNavigationController:(UINavigationController *)nav extras:(NSDictionary *)extras callback:(RCTResponseSenderBlock)callback {
 diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h
 index 66fdc1f..0280cfe 100644
 --- a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/HBDViewController.h
@@ -265,6 +402,19 @@ index 07de83d..c3b0957 100644
  - (void)statusBarFrameWillChange:(NSNotification *)notification {
      [self setNeedsStatusBarAppearanceUpdate];
  }
+diff --git a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/UINavigationController+HBD.m b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/UINavigationController+HBD.m
+index c5850e7..56f0d2c 100644
+--- a/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/UINavigationController+HBD.m
++++ b/node_modules/hybrid-navigation/ios/HybridNavigation/ViewController/UINavigationController+HBD.m
+@@ -15,7 +15,7 @@
+     if (children.count > 1) {
+         controller.hidesBottomBarWhenPushed = self.hidesBottomBarWhenPushed;
+     }
+-    [self setViewControllers:children animated:YES];
++    [self setViewControllers:children animated:animated];
+ }
+ 
+ @end
 diff --git a/node_modules/hybrid-navigation/lib/Options.d.ts b/node_modules/hybrid-navigation/lib/Options.d.ts
 index 436376d..6e63520 100644
 --- a/node_modules/hybrid-navigation/lib/Options.d.ts
